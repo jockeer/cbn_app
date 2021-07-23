@@ -13,7 +13,6 @@ class WelcomeScreen extends StatelessWidget {
         children: [
           _Carousel(),
           _Buttons()
-
         ],
       )
     );
@@ -37,9 +36,10 @@ class _Carousel extends StatelessWidget {
         scrollDirection: Axis.horizontal
       ),
       items: [
-        FondoPantalla(),
-        Center(child: Text('2', style: TextStyle(color: Colors.black),),),
-        Center(child: Text('3', style: TextStyle(color: Colors.black),),),
+        FondoPantalla(img: 'fondo1.png',),
+        FondoPantalla(img: 'fondo2.png',),
+        FondoPantalla(img: 'fondo3.png',),
+        
       ],
     );
   }

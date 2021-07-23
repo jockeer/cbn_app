@@ -6,13 +6,14 @@ class DatosConstantes{
 
 class ColoresApp{
   Color botonClaro = Color(0xff87858A);
+  Color plomo = Color(0xffB5B5B2);
 }
 
 class EstilosApp{
 
-  ButtonStyle buttonStyle(){
+  ButtonStyle buttonStyle({ bool oscuro = false }){
     return ElevatedButton.styleFrom(
-        primary: ColoresApp().botonClaro,
+        primary: (oscuro)? Colors.black : ColoresApp().botonClaro,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50.0),
         )

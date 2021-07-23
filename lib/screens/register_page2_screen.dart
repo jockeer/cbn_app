@@ -1,5 +1,6 @@
 import 'package:cbn/utils/constantes.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage2Screen extends StatelessWidget {
 
@@ -63,35 +64,62 @@ class _Formulario extends StatelessWidget {
         key: this.formState,
         child: Column(
           children: [
-            estilos.inputLabel(label: 'Carnet de identidad', obligatorio: true),
-            TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'Nro. Ci'),
-            ),
-            estilos.inputLabel(label: 'Ciudad de expedición', obligatorio: true),
-            TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'expedicion'),
-            ),
             estilos.inputLabel(label: 'Fecha de nacimiento', obligatorio: true),
+            _FechaNacimiento(),
+            estilos.inputLabel(label: 'Telefono / Celular', obligatorio: true),
             TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'Fecha de nacimiento'),
+              decoration: estilos.inputDecoration(hintText: 'Telefono / Celular'),
             ),
-            estilos.inputLabel(label: 'Pais', obligatorio: true),
+            estilos.inputLabel(label: 'Interno'),
             TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'pais'),
+              decoration: estilos.inputDecoration(hintText: 'interno'),
             ),
-            estilos.inputLabel(label: 'Ciudad', obligatorio: true),
+            estilos.inputLabel(label: 'Direccion', obligatorio: true),
             TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'Ciudad'),
+              decoration: estilos.inputDecoration(hintText: 'direccion'),
             ),
+            
             SizedBox(height: 30,),
             ElevatedButton(
               style: estilos.buttonStyle(),
               child: estilos.buttonChild(texto: 'Registrar'),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
+              },
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FechaNacimiento extends StatelessWidget {
+
+  final estilos = EstilosApp();
+  final TextEditingController _inputFiledDateController = new TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      enableInteractiveSelection: false,
+      controller: _inputFiledDateController,
+      decoration: estilos.inputDecoration(hintText: 'Fecha de nacimiento'),
+      onTap: () async{
+        FocusScope.of(context).requestFocus(new FocusNode());
+        DateTime? picked = await showDatePicker(
+          context: context,
+          initialDate: new DateTime(DateTime.now().year - 20),
+          firstDate: new DateTime(DateTime.now().year - 80),
+          lastDate: new DateTime(DateTime.now().year - 18)
+        );
+         if ( picked != null ) {
+      
+           final fechaFormateada = DateFormat('dd/MM/yyyy').format(picked);
+           print(fechaFormateada);
+          }
+    
+      },
     );
   }
 }

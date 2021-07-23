@@ -26,43 +26,46 @@ class _Menu extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'cupon_gifcard')),
             SizedBox(width: 10,),
-            Expanded(child: _MenuItem(titulo: 'Calculadora (IVA)', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'Calculadora (IVA)', ruta: 'cupon_gifcard')),
           ],
         ),
         SizedBox(height: 15,),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Stack(
-            children: [
-              Container(
-              height: size.width*0.4,
-              color: Colors.black,
-              ),
-              Positioned(
-                top: 10,
-                left: 20,
-                right: 20,
-                child: Text('Cupones y Gift Cards', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
-              )
-            ],
+        GestureDetector(
+          onTap: (){Navigator.pushNamed(context, 'cupon_gifcard');},
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Stack(
+              children: [
+                Container(
+                height: size.width*0.4,
+                color: Colors.black,
+                ),
+                Positioned(
+                  top: 10,
+                  left: 20,
+                  right: 20,
+                  child: Text('Cupones y Gift Cards', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+                )
+              ],
+            ),
           ),
         ),
         SizedBox(height: 15,),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'Informa', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'Informa', ruta: 'cupon_gifcard')),
             SizedBox(width: 10,),
-            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'cupon_gifcard')),
           ],
         ),
         SizedBox(height: 15,),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard')),
             SizedBox(width: 10,),
-            Expanded(child: _MenuItem(titulo: 'Visualizador (IVA)', ruta: 'ruta')),
+            Expanded(child: _MenuItem(titulo: 'Visualizador (IVA)', ruta: 'cupon_gifcard')),
           ],
         ),
       ],
@@ -79,21 +82,26 @@ class _MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
-      child: Stack(
-        children: [
-          Container(
-          height: size.width*0.5,
-          color: Colors.black,
-          ),
-          Positioned(
-            top: 10,
-            left: 20,
-            right: 20,
-            child: Text(this.titulo, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
-          )
-        ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, this.ruta);
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: Stack(
+          children: [
+            Container(
+            height: size.width*0.5,
+            color: Colors.black,
+            ),
+            Positioned(
+              top: 10,
+              left: 20,
+              right: 20,
+              child: Text(this.titulo, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),)
+            )
+          ],
+        ),
       ),
     );
   }

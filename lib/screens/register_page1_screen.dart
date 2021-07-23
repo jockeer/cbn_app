@@ -23,13 +23,12 @@ class RegisterPage1Screen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: FlutterLogo(size: size.width*0.3,)),
+                Center(child: Image(image: AssetImage('assets/icons/logoNegroCBN.png'), width: size.width*0.4,)),
                 _Formulario(formState: formState,),
               ],
             ),
           ),
         ),
-
       )
     );
   }
@@ -53,12 +52,15 @@ class _Formulario extends StatelessWidget {
             _FirstName(),
             estilos.inputLabel(label: 'Apellido(s)', obligatorio: true),
             _LastName(),
+            estilos.inputLabel(label: 'Legajo', obligatorio: true),
+            _Legajo(),
+            estilos.inputLabel(label: 'Carnet de identidad', obligatorio: true),
+            _Carnet(),
             estilos.inputLabel(label: 'Correo electrónico', obligatorio: true),
             _Email(),
-            estilos.inputLabel(label: 'Contraseña', obligatorio: true),
-            _Password(),
             SizedBox(height: 50,),
-            _NextButton(formState: this.formState,)
+            _NextButton(formState: this.formState,),
+            SizedBox(height: 50,),
           ],
         ),
       ),
@@ -95,6 +97,35 @@ class _LastName extends StatelessWidget {
   }
 }
 
+class _Legajo extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final estilos = EstilosApp();
+    return TextFormField(
+      decoration: estilos.inputDecoration(hintText: 'Legajo'),
+      validator: (value){
+        if (value!.isEmpty) return 'El legajo es obligatorio';
+        return null;
+      },
+    );
+  }
+}
+class _Carnet extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final estilos = EstilosApp();
+    return TextFormField(
+      decoration: estilos.inputDecoration(hintText: 'Carnet de identidad'),
+      validator: (value){
+        if (value!.isEmpty) return 'El carnet es obligatorio';
+        return null;
+      },
+    );
+  }
+}
+
 class _Email extends StatelessWidget {
 
   final validator = FormValidator();
@@ -108,24 +139,6 @@ class _Email extends StatelessWidget {
       validator: (value){
         if (value!.isEmpty) return 'El email es obligatorio';
         if (!validator.validarEmail(value)) return 'El email no es valido';
-        return null;
-        
-      },
-    );
-  }
-}
-
-class _Password extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    final estilos = EstilosApp();
-    return TextFormField(
-      obscureText: true,
-      decoration: estilos.inputDecoration(hintText: 'Contraseña'),
-      validator: (value){
-        if (value!.isEmpty) return "La contraseña es obligatoria";
-        if (value.length < 6) return "La contraseña debe tener un mínimo de 6 caracteres";
         return null;
       },
     );
@@ -145,7 +158,7 @@ class _NextButton extends StatelessWidget {
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Siguiente'),
       onPressed: (){
-        if (!this.formState.currentState!.validate()) return;
+        // if (!this.formState.currentState!.validate()) return;
         Navigator.pushNamed(context, 'register_page2');
       },
     );

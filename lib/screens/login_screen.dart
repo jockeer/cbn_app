@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: FlutterLogo(size: size.width*0.3,)),
+                Center(child: Image(image: AssetImage('assets/icons/logoNegroCBN.png'), width: size.width*0.4,)),
                 SizedBox(height: 50,),
                 _Formulario(formState:formState)
               ],
@@ -48,7 +48,7 @@ class _Formulario extends StatelessWidget {
         key: this.formState,
         child: Column(
           children: [
-            estilos.inputLabel(label: 'Usuario'),
+            estilos.inputLabel(label: 'Legajo'),
             _UserName(),
             estilos.inputLabel(label: 'Contraseña'),
             _Password(),
@@ -75,7 +75,7 @@ class _UserName extends StatelessWidget {
     final estilos = EstilosApp();
     return TextFormField(
       keyboardType: TextInputType.number,
-      decoration: estilos.inputDecoration(hintText: 'Usuario'),
+      decoration: estilos.inputDecoration(hintText: 'Legajo'),
       onChanged: (value){
         provider.user=value;
       },

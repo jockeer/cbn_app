@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: ( _ ) =>LoginProvider(),)
+        ChangeNotifierProvider(create: ( _ ) => LoginProvider(),),
+        ChangeNotifierProvider(create: ( _ ) => OpcionElegidaProvider(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -38,7 +39,11 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
             elevation: 0
-          )
+          ),
+          // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          //   backgroundColor: Colors.yellow,
+          //   elevation: 0.0
+          // )
         ),
       ),
     );
