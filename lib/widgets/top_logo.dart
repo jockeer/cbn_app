@@ -8,7 +8,7 @@ class TopLogoWidget extends StatelessWidget {
     return Center(
       child: Image(
         image: AssetImage('assets/icons/logoNegroCBN.png'),
-        width: size.width * 0.4,
+        width: size.width * 0.35,
       ),
     );
   }

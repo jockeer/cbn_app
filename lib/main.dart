@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: ( _ ) => LoginProvider(),),
-        ChangeNotifierProvider(create: ( _ ) => OpcionElegidaProvider(),),
+        ChangeNotifierProvider(create: ( _ ) => GiftCardProvider(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

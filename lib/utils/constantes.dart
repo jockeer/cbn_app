@@ -20,10 +20,10 @@ class EstilosApp{
     );
   }
 
-  Padding buttonChild({required String texto}){
+  Padding buttonChild({required String texto, double size = 18.0}){
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),
-        child: Text(texto,style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+        child: Text(texto,style: TextStyle(fontSize: size, fontWeight: FontWeight.bold),),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:cbn/screens/metodo_pago_screen.dart';
 import 'package:cbn/screens/recarga_gift_card_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ Map<String, WidgetBuilder> getRoutes(){
     'tiendas_afiliadas' : (_)=> TiendasAfiliadasScreen(),
     'cupones' : (_)=> CuponesScreen(),
     'recarga_gift_card' : (_)=> RecargaGiftCardScreen(),
+    'metodo_pago' : (_)=> MetodoPagoScreen(),
 
   };
 }
