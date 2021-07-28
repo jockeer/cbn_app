@@ -1,5 +1,6 @@
 import 'package:cbn/providers/login_provider.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,13 +10,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: (){
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) {
-          FocusManager.instance.primaryFocus!.unfocus();
-        }
+        if (!focus.hasPrimaryFocus && focus.hasFocus) return FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -23,7 +21,7 @@ class LoginScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: Image(image: AssetImage('assets/icons/logoNegroCBN.png'), width: size.width*0.4,)),
+                TopLogoWidget(),
                 SizedBox(height: 50,),
                 _Formulario(formState:formState)
               ],
@@ -125,7 +123,7 @@ class _LoginButton extends StatelessWidget {
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Ingresa'),
       onPressed: (){
-        if (!this.formState.currentState!.validate()) return;
+        //if (!this.formState.currentState!.validate()) return;
 
         //print('${provider.user} ${provider.password}');
         Navigator.pushNamed(context, 'home');

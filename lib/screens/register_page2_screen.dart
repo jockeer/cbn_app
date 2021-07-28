@@ -11,9 +11,7 @@ class RegisterPage2Screen extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) {
-          FocusManager.instance.primaryFocus!.unfocus();
-        }
+        if (!focus.hasPrimaryFocus && focus.hasFocus) return FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),

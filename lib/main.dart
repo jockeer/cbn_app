@@ -1,4 +1,5 @@
 
+import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:cbn/routes/routes.dart';
 import 'package:cbn/providers/providers.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = PreferenciasUsuario();
+  await prefs.initPrefs();
+  
   runApp(MyApp());
 }
 
@@ -40,10 +45,6 @@ class MyApp extends StatelessWidget {
             iconTheme: IconThemeData(color: Colors.black),
             elevation: 0
           ),
-          // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          //   backgroundColor: Colors.yellow,
-          //   elevation: 0.0
-          // )
         ),
       ),
     );

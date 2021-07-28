@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/validator.dart';
+import 'package:cbn/widgets/widgets.dart';
 
 class RegisterPage1Screen extends StatelessWidget {
 
@@ -9,13 +10,10 @@ class RegisterPage1Screen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: (){
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) {
-          FocusManager.instance.primaryFocus!.unfocus();
-        }
+        if (!focus.hasPrimaryFocus && focus.hasFocus) return  FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -23,7 +21,7 @@ class RegisterPage1Screen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: Image(image: AssetImage('assets/icons/logoNegroCBN.png'), width: size.width*0.4,)),
+                TopLogoWidget(),
                 _Formulario(formState: formState,),
               ],
             ),

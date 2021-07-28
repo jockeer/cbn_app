@@ -32,7 +32,7 @@ class _BotonRecarga extends StatelessWidget {
           child: estilos.buttonChild(texto: 'Recarga'),
           style: estilos.buttonStyle(oscuro: true),
           onPressed: (){
-
+            Navigator.pushNamed(context, 'recarga_gift_card');
           },
         ),
         SizedBox(height: 10,),
@@ -54,61 +54,74 @@ class _Transacciones extends StatelessWidget {
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
           ListTile(
             title: Text('Pago de prueba - Sucursal Norte', style: TextStyle(fontWeight: FontWeight.bold),),
             subtitle: Text('02/07/2021 16:20:48'),
             trailing: Text('Bs. 50.00', style: TextStyle(fontWeight: FontWeight.bold),),
           ),
+          Divider(),
+          
         ],
       ),
     );
