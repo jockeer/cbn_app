@@ -59,7 +59,7 @@ class _Buttons extends StatelessWidget {
         children: [
           SizedBox(width: 10,),
           Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'login'); }, child: estilos.buttonChild(texto: 'Ingresa'), style: estilos.buttonStyle(),)),
-          Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'register_page1'); }, child: estilos.buttonChild(texto: 'Regístrate'), style: estilos.buttonStyle(),)),
+          Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'validacion'); }, child: estilos.buttonChild(texto: 'Regístrate'), style: estilos.buttonStyle(),)),
           SizedBox(width: 10,),
         ],
       ),

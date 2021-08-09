@@ -27,8 +27,8 @@ class _Menu extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'cupon_gifcard')),
-            Expanded(child: _MenuItem(titulo: 'Calculadora (IVA)', ruta: 'cupon_gifcard')),
+            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'perfil', img:'glosario.jpg')),
+            Expanded(child: _MenuItem(titulo: 'Calculadora (IVA)', ruta: 'cupon_gifcard', img:'iva.jpg')),
           ],
         ),
         
@@ -56,14 +56,14 @@ class _Menu extends StatelessWidget {
         SizedBox(height: 10,),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'Informa', ruta: 'cupon_gifcard')),
-            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'cupon_gifcard')),
+            Expanded(child: _MenuItem(titulo: 'Informa', ruta: 'informa', img:'informa.jpg')),
+            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'cupon_gifcard', img:'gestion.jpg')),
           ],
         ),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard')),
-            Expanded(child: _MenuItem(titulo: 'Visualizador (IVA)', ruta: 'cupon_gifcard')),
+            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard', img:'glosario.jpg')),
+            Expanded(child: _MenuItem(titulo: 'Visualizador (IVA)', ruta: 'cupon_gifcard', img:'visualizador.jpg')),
           ],
         ),
       ],
@@ -73,11 +73,11 @@ class _Menu extends StatelessWidget {
 
 class _MenuItem extends StatelessWidget {
 
-  final String titulo, ruta;
+  final String titulo, ruta, img;
 
   final prefs = PreferenciasUsuario();
   
-  _MenuItem({required this.titulo,required this.ruta});
+  _MenuItem({required this.titulo,required this.ruta, required this.img});
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class _MenuItem extends StatelessWidget {
                 margin: EdgeInsets.symmetric( vertical: 10, horizontal: 6),
                 height: size.width * 0.45,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  image: DecorationImage(image: AssetImage('assets/img/$img'), fit: BoxFit.cover),
                   borderRadius: BorderRadius.circular(30)
                 ),
             ),
