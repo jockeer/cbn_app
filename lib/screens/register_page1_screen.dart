@@ -18,16 +18,22 @@ class RegisterPage1Screen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TopLogoWidget(),
-                _Formulario(formState: formState,),
-              ],
-            ),
+          child: Stack(
+            children: [
+              FondoPantalla(img: 'fondoblanco.png'),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TopLogoWidget(),
+                    _Formulario(formState: formState,),
+                  ],
+                ),
+              ),
+
+            ],
           ),
         ),
-      )
+      ),
     );
   }
 }

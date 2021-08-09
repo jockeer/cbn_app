@@ -10,10 +10,11 @@ class FondoPantalla extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Image(
-      image: AssetImage('assets/fondos/$img'),
-      fit: BoxFit.cover,
-      width: size.width,
-      height: size.height,
-    );
+        image: AssetImage('assets/fondos/$img'),
+        fit: BoxFit.cover,
+        width: size.width,
+        height: size.height,
+        
+      );
   }
 }

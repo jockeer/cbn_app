@@ -1,4 +1,5 @@
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:cbn/widgets/top_logo.dart';
 import 'package:flutter/material.dart';
 
@@ -14,15 +15,22 @@ class RegisterValidationScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Column(
+        body: SafeArea(
+          child: Stack(
             children: [
-              TopLogoWidget(),
-              SizedBox(height: 50,),
-              _Formulario(formState: formState)
+              FondoPantalla(img: 'fondoblanco.png'),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TopLogoWidget(),
+                    SizedBox(height: 50,),
+                    _Formulario(formState: formState),
+                  ],
+                ),
+              )
             ],
           ),
-        ),   
+        ),
       ),
     );
   }

@@ -1,6 +1,11 @@
+
+import 'package:cbn/providers/providers.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage2Screen extends StatelessWidget {
 
@@ -17,11 +22,16 @@ class RegisterPage2Screen extends StatelessWidget {
         appBar: AppBar(),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
+            child: Stack(
               children: [
-                _Info(),
-                SizedBox(height: 40,),
-                _Formulario(formState: formState,),
+                FondoPantalla(img: 'fondoblanco.png'),
+                Column(
+                  children: [
+                    _Info(),
+                    SizedBox(height: 40,),
+                    _Formulario(formState: formState,),
+                  ],
+                ),
               ],
             ),
           ),
@@ -56,12 +66,15 @@ class _Formulario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Form(
         key: this.formState,
         child: Column(
           children: [
+            estilos.inputLabel(label: 'Foto de perfil'),
+            _FotoPerfil(),
             estilos.inputLabel(label: 'Fecha de nacimiento', obligatorio: true),
             _FechaNacimiento(),
             estilos.inputLabel(label: 'Telefono / Celular', obligatorio: true),
@@ -87,6 +100,55 @@ class _Formulario extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _FotoPerfil extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final provider = Provider.of<RegistroProvider>(context);
+    return Container(
+      width: 150,
+      height: 150,
+      child: Stack(
+        children: [
+          (provider.foto == null)
+            ? Center(child: Image.asset('assets/icons/logoNegroCBN.png', width: size.width*0.5,))
+            : Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(200),
+                child: Image.file(provider.foto!,
+                  fit: BoxFit.cover,
+                  width: size.width*0.5,
+                  height: size.width*0.5,
+                ),
+              ),
+            )
+          ,
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: Center(
+              child: IconButton(
+                icon: Icon(Icons.camera_alt, color: Colors.black, size: size.width*0.13,),
+                onPressed: () async {
+                  final ImagePicker _picker = new ImagePicker();
+                  final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+                  if (photo == null) {
+                    print('No selecciono nada');
+                    return;
+                  }
+                  print('tenemos imagen ${photo.path}');
+                  provider.updateSelectedFoto(photo.path);
+                },
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

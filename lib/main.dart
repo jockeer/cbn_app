@@ -1,4 +1,5 @@
 
+import 'package:cbn/providers/registro_provider.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: ( _ ) => LoginProvider(),),
         ChangeNotifierProvider(create: ( _ ) => GiftCardProvider(),),
+        ChangeNotifierProvider(create: ( _ ) => RegistroProvider(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

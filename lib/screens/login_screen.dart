@@ -18,14 +18,19 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TopLogoWidget(),
-                SizedBox(height: 50,),
-                _Formulario(formState:formState)
-              ],
-            ),
+          child: Stack(
+            children: [
+              FondoPantalla(img: 'fondoblanco.png'),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TopLogoWidget(),
+                    SizedBox(height: 50,),
+                    _Formulario(formState:formState)
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
