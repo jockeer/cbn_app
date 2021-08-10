@@ -1,5 +1,4 @@
 import 'package:cbn/utils/constantes.dart';
-import 'package:cbn/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
@@ -7,7 +6,15 @@ class PerfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Perfil de usuario', centrado: true),
+      appBar: AppBar(
+      centerTitle: true,
+      title: Text('Perfil de usuario', style: TextStyle(color: Colors.white),), 
+      backgroundColor: Colors.black, 
+      iconTheme: IconThemeData(color: Colors.white),
+      actions: [
+        IconButton(onPressed: (){}, icon: Icon(Icons.edit))
+      ],
+    ),
       body: SafeArea(
         child: ListView(
           children: [

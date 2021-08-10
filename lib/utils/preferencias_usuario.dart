@@ -25,13 +25,5 @@ class PreferenciasUsuario {
     prefs.setInt('inbox', cantidad);
   }
 
-  // get codigoSocio{
-  //   return _prefs.getString('codigo') ?? 'sin codigo';
-  // }
-
-  // set codigoSocio(String codigo){
-  //   _prefs.setString('codigo', codigo);
-  // }
-
 
 }
