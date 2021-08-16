@@ -1,5 +1,9 @@
 import 'package:cbn/providers/login_provider.dart';
+import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/carga.dart';
+import 'package:cbn/utils/snackbar.dart';
+import 'package:cbn/utils/verificar_internet.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -117,21 +121,35 @@ class _Password extends StatelessWidget {
 
 class _LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formState;
+  final usuarioService = UsuarioService();
   
   _LoginButton({required this.formState});
 
   @override
   Widget build(BuildContext context) {
     final estilos = EstilosApp();
-    //final provider = Provider.of<LoginProvider>(context, listen: false);
+    final provider = Provider.of<LoginProvider>(context, listen: false);
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Ingresa'),
-      onPressed: (){
-        //if (!this.formState.currentState!.validate()) return;
+      onPressed: () async {
+        if (!this.formState.currentState!.validate()) return;
 
-        //print('${provider.user} ${provider.password}');
+        final internet = await comprobarInternet();
+        if (!internet) return mostrarSnackBar(context: context, mensaje: 'Revise su conexion a internet e intentelo nuevamente'); 
+
+        loading(titulo: 'Espere..', context: context);
+
+        final login = await usuarioService.login(legajo: provider.user, ci: provider.password);
+        Navigator.pop(context);
+        if (login == null) return mostrarSnackBar(context: context, mensaje: 'datos incorrectos');
         Navigator.pushNamed(context, 'home');
+        // await Future.delayed(Duration(seconds: 2),(){
+        //   Navigator.pop(context);
+        // });
+
+        // //print('${provider.user} ${provider.password}');
+        // Navigator.pushNamed(context, 'home');
       },
     );
   }

@@ -1,7 +1,7 @@
 import 'package:cbn/providers/providers.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/snackbar.dart';
 import 'package:cbn/utils/validator.dart';
-import 'package:cbn/widgets/snackbar.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -55,8 +55,8 @@ class _BotonRecarga extends StatelessWidget {
         child: estilos.buttonChild(texto: 'Comprar'),
         style: estilos.buttonStyle(oscuro: true),
         onPressed: (){
-          if(provider.montoRecarga=='' || provider.montoRecarga=='0') return mostrarSnackBar(context, 'Escoga o indique un monto valido');
-          if(!validator.isNumeric(provider.montoRecarga)) return mostrarSnackBar(context, 'El monto no es valido');
+          if(provider.montoRecarga=='' || provider.montoRecarga=='0') return mostrarSnackBar(context: context, mensaje: 'Escoga o indique un monto valido');
+          if(!validator.isNumeric(provider.montoRecarga)) return mostrarSnackBar(context: context, mensaje: 'El monto no es valido');
 
           Navigator.pushNamed(context, 'metodo_pago');
           

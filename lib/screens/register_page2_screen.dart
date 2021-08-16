@@ -1,7 +1,13 @@
 
+import 'package:cbn/models/customer.dart';
 import 'package:cbn/providers/providers.dart';
+import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/carga.dart';
+import 'package:cbn/utils/snackbar.dart';
+import 'package:cbn/utils/verificar_internet.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +19,7 @@ class RegisterPage2Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CustomerModel customer = ModalRoute.of(context)?.settings.arguments as CustomerModel;
     return GestureDetector(
       onTap: (){
         final FocusScopeNode focus = FocusScope.of(context);
@@ -29,7 +36,7 @@ class RegisterPage2Screen extends StatelessWidget {
                   children: [
                     _Info(),
                     SizedBox(height: 40,),
-                    _Formulario(formState: formState,),
+                    _Formulario(formState: formState, customer: customer,),
                   ],
                 ),
               ],
@@ -61,8 +68,9 @@ class _Info extends StatelessWidget {
 class _Formulario extends StatelessWidget {
 
   final formState;
+  final CustomerModel customer;
   final estilos = EstilosApp();
-  _Formulario({required this.formState});
+  _Formulario({required this.formState, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -78,29 +86,108 @@ class _Formulario extends StatelessWidget {
             estilos.inputLabel(label: 'Fecha de nacimiento', obligatorio: true),
             _FechaNacimiento(),
             estilos.inputLabel(label: 'Telefono / Celular', obligatorio: true),
-            TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'Telefono / Celular'),
-            ),
+            _Cellphone(customer: this.customer,),
             estilos.inputLabel(label: 'Interno'),
-            TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'interno'),
-            ),
+            _Interno(customer: this.customer,),
             estilos.inputLabel(label: 'Direccion', obligatorio: true),
-            TextFormField(
-              decoration: estilos.inputDecoration(hintText: 'direccion'),
-            ),
+            _Address(customer: this.customer),
             
             SizedBox(height: 30,),
-            ElevatedButton(
-              style: estilos.buttonStyle(),
-              child: estilos.buttonChild(texto: 'Registrar'),
-              onPressed: (){
-                Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
-              },
-            )
+            _BotonRegistro(formState: this.formState,),
+            SizedBox(height: 30,),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Address extends StatelessWidget {
+  final CustomerModel customer;
+  final estilos = EstilosApp();
+
+  _Address({ required this.customer });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: this.customer.address,
+      decoration: estilos.inputDecoration(hintText: 'direccion'),
+      validator: (value){
+        this.customer.address=value;
+      },
+    );
+  }
+}
+
+class _Interno extends StatelessWidget {
+  final CustomerModel customer;
+  final estilos = EstilosApp();
+
+  _Interno({ required this.customer });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: this.customer.internal,
+      decoration: estilos.inputDecoration(hintText: 'interno'),
+      validator: (value) {
+        this.customer.internal = value;
+      }
+    );
+  }
+}
+
+class _Cellphone extends StatelessWidget {
+  
+  final CustomerModel customer;
+  final estilos = EstilosApp();
+
+  _Cellphone({ required this.customer });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: this.customer.cellphone,
+      decoration: estilos.inputDecoration(hintText: 'Telefono / Celular'),
+      validator: (value){
+        if (value!.isEmpty) return "El numero telefonico es obligatorio";
+        return null; 
+      },
+    );
+  }
+}
+
+class _BotonRegistro extends StatelessWidget {
+  final estilos = EstilosApp();
+  final GlobalKey<FormState> formState;
+  final usuarioService = UsuarioService();
+
+  _BotonRegistro({ required this.formState});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
+    return ElevatedButton(
+      style: estilos.buttonStyle(),
+      child: estilos.buttonChild(texto: 'Registrar'),
+      onPressed: ()async{
+        final internet = await comprobarInternet();
+        if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
+        
+        loading(titulo: 'Registrando...', context: context);
+
+        final registro = await usuarioService.registrarUsuario();
+       
+        await Future.delayed(Duration(seconds: 2),(){
+          Navigator.pop(context);
+        });
+        provider.pin = '';
+        Navigator.pushNamed(context, 'pin_validacion');
+
+        // Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
+        
+      },
     );
   }
 }
@@ -161,10 +248,11 @@ class _FechaNacimiento extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
       enableInteractiveSelection: false,
       controller: _inputFiledDateController,
-      decoration: estilos.inputDecoration(hintText: 'Fecha de nacimiento'),
+      decoration: estilos.inputDecoration(hintText: provider.birthday),
       onTap: () async{
         FocusScope.of(context).requestFocus(new FocusNode());
         DateTime? picked = await showDatePicker(
@@ -175,8 +263,8 @@ class _FechaNacimiento extends StatelessWidget {
         );
          if ( picked != null ) {
       
-           final fechaFormateada = DateFormat('dd/MM/yyyy').format(picked);
-           print(fechaFormateada);
+           final fechaFormateada = DateFormat('yyyy-dd-MM').format(picked);
+           provider.birthday = fechaFormateada.toString();
           }
     
       },

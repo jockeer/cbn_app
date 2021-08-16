@@ -1,7 +1,13 @@
+import 'package:cbn/providers/providers.dart';
+import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/snackbar.dart';
+import 'package:cbn/utils/verificar_internet.dart';
+import 'package:cbn/utils/carga.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:cbn/widgets/top_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterValidationScreen extends StatelessWidget {
   final formState = GlobalKey<FormState>();
@@ -68,6 +74,7 @@ class _Formulario extends StatelessWidget {
 class _BotonValidacion extends StatelessWidget {
   
   final GlobalKey<FormState> formState;
+  final pruebaService = UsuarioService();
 
   _BotonValidacion({ required this.formState });
 
@@ -75,12 +82,19 @@ class _BotonValidacion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Validar'),
-      onPressed: (){
-        //if (!this.formState.currentState!.validate()) return;
-        Navigator.pushNamed(context, 'register_page1');
+      onPressed: () async {
+        if (!this.formState.currentState!.validate()) return;
+        final intenet = await comprobarInternet();
+        if (!intenet) return mostrarSnackBar(context: context, mensaje: 'Revise su conexion a internet y vuelva a intentarlo');
+        loading(titulo: 'Validando', context: context);
+        final  resp = await pruebaService.obtenerUsuarios(legajo: provider.legajo, ci: provider.ci);
+        Navigator.pop(context);
+        if (resp == null) return mostrarSnackBar(context: context, mensaje: 'Datos incorrectos');
+        Navigator.pushNamed(context, 'register_page1', arguments: resp);
       }, 
     );
   }
@@ -92,9 +106,11 @@ class _Carnet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
       decoration: estilos.inputDecoration(hintText: 'Carnet de identidad'),
       validator: (value){
+        provider.ci = value.toString();
         if (value!.isEmpty) return 'El Carnet es obligatorio';
       },
     );
@@ -107,9 +123,11 @@ class _Legajo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
       decoration: estilos.inputDecoration(hintText: 'Legajo'),
       validator: (value){
+        provider.legajo=value.toString();
         if (value!.isEmpty) return 'El legajo es obligatorio';
       },
     );

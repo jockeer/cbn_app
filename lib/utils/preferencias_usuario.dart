@@ -24,6 +24,4 @@ class PreferenciasUsuario {
   set inbox(int cantidad){
     prefs.setInt('inbox', cantidad);
   }
-
-
 }

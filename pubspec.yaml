@@ -11,11 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.3+1
   intl: ^0.17.0
+  jwt_decoder: ^2.0.1
   provider: ^5.0.0
   shared_preferences: ^2.0.6
 
