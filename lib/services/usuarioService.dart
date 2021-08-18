@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:cbn/models/customer.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioService {
   final constantes = DatosConstantes();
+  final prefs = PreferenciasUsuario();
 
   Future login({required String legajo,required String ci }) async {
     final url = Uri.http(constantes.dominio, 'api/auth/login');
@@ -22,7 +24,8 @@ class UsuarioService {
     );
     final decoded = await json.decode(respuesta.body);
     if (!decoded["ok"]) return null;
-    return decoded;
+    prefs.token = decoded["token"];
+    return decoded; 
   }
 
   Future obtenerUsuarios({required String legajo,required String ci }) async {
@@ -34,8 +37,17 @@ class UsuarioService {
     return customer;
   }
 
-  Future registrarUsuario() async {
+  Future registrarUsuario( CustomerModel customer ) async {
+    final url = Uri.http(constantes.dominio, 'api/user');
+    final customernuevo = jsonEncode(customer.toJson()); 
     
+    final respuesta = await http.post(url,
+      body:customernuevo,
+      headers: {
+        "Content-Type":"application/json"
+      }
+    );
+    print(respuesta);
   }
 
 }

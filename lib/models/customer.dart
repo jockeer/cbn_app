@@ -16,7 +16,7 @@ class CustomerModel {
         this.internal,
         this.address,
 
-        this.email,
+        this.email
     });
 
     int ?id;
@@ -30,6 +30,7 @@ class CustomerModel {
     String ?address;
 
     String ?email;
+
 
     factory CustomerModel.fromJson(Map<String, dynamic> json) => CustomerModel(
         id: json["id"],
@@ -53,5 +54,6 @@ class CustomerModel {
         "cellphone": cellphone,
         "internal": internal,
         "address": address,
+        "email": email,
     };
 }

@@ -144,12 +144,6 @@ class _LoginButton extends StatelessWidget {
         Navigator.pop(context);
         if (login == null) return mostrarSnackBar(context: context, mensaje: 'datos incorrectos');
         Navigator.pushNamed(context, 'home');
-        // await Future.delayed(Duration(seconds: 2),(){
-        //   Navigator.pop(context);
-        // });
-
-        // //print('${provider.user} ${provider.password}');
-        // Navigator.pushNamed(context, 'home');
       },
     );
   }

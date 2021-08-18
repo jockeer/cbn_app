@@ -28,20 +28,21 @@ class RegisterPage2Screen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Stack(
+          child: Stack(
               children: [
                 FondoPantalla(img: 'fondoblanco.png'),
-                Column(
-                  children: [
-                    _Info(),
-                    SizedBox(height: 40,),
-                    _Formulario(formState: formState, customer: customer,),
-                  ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _Info(),
+                      SizedBox(height: 40,),
+                      _Formulario(formState: formState, customer: customer,),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
+          
         ),
       ),
     );
@@ -84,16 +85,16 @@ class _Formulario extends StatelessWidget {
             estilos.inputLabel(label: 'Foto de perfil'),
             _FotoPerfil(),
             estilos.inputLabel(label: 'Fecha de nacimiento', obligatorio: true),
-            _FechaNacimiento(),
+            _FechaNacimiento(customer: this.customer),
             estilos.inputLabel(label: 'Telefono / Celular', obligatorio: true),
             _Cellphone(customer: this.customer,),
             estilos.inputLabel(label: 'Interno'),
             _Interno(customer: this.customer,),
-            estilos.inputLabel(label: 'Direccion', obligatorio: true),
+            estilos.inputLabel(label: 'Direccion'),
             _Address(customer: this.customer),
             
             SizedBox(height: 30,),
-            _BotonRegistro(formState: this.formState,),
+            _BotonRegistro(formState: this.formState, customer: this.customer),
             SizedBox(height: 30,),
           ],
         ),
@@ -151,6 +152,7 @@ class _Cellphone extends StatelessWidget {
       initialValue: this.customer.cellphone,
       decoration: estilos.inputDecoration(hintText: 'Telefono / Celular'),
       validator: (value){
+        this.customer.cellphone=value;
         if (value!.isEmpty) return "El numero telefonico es obligatorio";
         return null; 
       },
@@ -160,10 +162,11 @@ class _Cellphone extends StatelessWidget {
 
 class _BotonRegistro extends StatelessWidget {
   final estilos = EstilosApp();
+  final CustomerModel customer;
   final GlobalKey<FormState> formState;
   final usuarioService = UsuarioService();
 
-  _BotonRegistro({ required this.formState});
+  _BotonRegistro({ required this.formState, required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -172,18 +175,20 @@ class _BotonRegistro extends StatelessWidget {
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Registrar'),
       onPressed: ()async{
+        print(provider.birthday);
+        if(!this.formState.currentState!.validate()) return null;
+        if (provider.birthday.isEmpty) return mostrarSnackBar(context: context, mensaje: "elija su fecha de nacimiento");
         final internet = await comprobarInternet();
         if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
         
         loading(titulo: 'Registrando...', context: context);
-
-        final registro = await usuarioService.registrarUsuario();
+        final registro = await usuarioService.registrarUsuario(this.customer);
+        Navigator.pop(context);
        
-        await Future.delayed(Duration(seconds: 2),(){
-          Navigator.pop(context);
-        });
-        provider.pin = '';
-        Navigator.pushNamed(context, 'pin_validacion');
+        // await Future.delayed(Duration(seconds: 2),(){
+        // });
+        // provider.pin = '';
+        // Navigator.pushNamed(context, 'pin_validacion');
 
         // Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
         
@@ -243,7 +248,11 @@ class _FotoPerfil extends StatelessWidget {
 
 class _FechaNacimiento extends StatelessWidget {
 
+  final CustomerModel customer;
   final estilos = EstilosApp();
+
+  _FechaNacimiento({ required this.customer });
+
   final TextEditingController _inputFiledDateController = new TextEditingController();
 
   @override
@@ -261,11 +270,14 @@ class _FechaNacimiento extends StatelessWidget {
           firstDate: new DateTime(DateTime.now().year - 80),
           lastDate: new DateTime(DateTime.now().year - 18)
         );
-         if ( picked != null ) {
+        if ( picked != null ) {
       
-           final fechaFormateada = DateFormat('yyyy-dd-MM').format(picked);
+           final fechaFormateada = DateFormat('yyyy-MM-dd').format(picked);
            provider.birthday = fechaFormateada.toString();
-          }
+           this.customer.birthday = provider.birthday;
+        }else{
+          this.customer.birthday = null;
+        }
     
       },
     );

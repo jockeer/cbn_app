@@ -24,4 +24,12 @@ class PreferenciasUsuario {
   set inbox(int cantidad){
     prefs.setInt('inbox', cantidad);
   }
+
+  String get token{
+    return prefs.getString('token') ?? '';
+  }
+
+  set token(String cantidad){
+    prefs.setString('token', cantidad);
+  }
 }

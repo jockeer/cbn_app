@@ -186,14 +186,12 @@ class _NextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<RegistroProvider>(context);
     final estilos = EstilosApp();
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Siguiente'),
       onPressed: (){
         if (!this.formState.currentState!.validate()) return;
-        provider.birthday = this.customer.birthday.toString();
         Navigator.pushNamed(context, 'register_page2', arguments: this.customer);
       },
     );

@@ -10,7 +10,7 @@ class RegistroProvider extends ChangeNotifier{
 
   String _email = '';
 
-  String _birthday = '';
+  String _birthday = 'Fecha de nacimiento';
   String _legajo = '';
   String _ci = '';
 
