@@ -175,7 +175,6 @@ class _BotonRegistro extends StatelessWidget {
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Registrar'),
       onPressed: ()async{
-        print(provider.birthday);
         if(!this.formState.currentState!.validate()) return null;
         if (provider.birthday.isEmpty) return mostrarSnackBar(context: context, mensaje: "elija su fecha de nacimiento");
         final internet = await comprobarInternet();
@@ -184,14 +183,14 @@ class _BotonRegistro extends StatelessWidget {
         loading(titulo: 'Registrando...', context: context);
         final registro = await usuarioService.registrarUsuario(this.customer);
         Navigator.pop(context);
-       
-        // await Future.delayed(Duration(seconds: 2),(){
-        // });
-        // provider.pin = '';
-        // Navigator.pushNamed(context, 'pin_validacion');
 
-        // Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
-        
+        if (registro.containsKey("errors")) return mostrarSnackBar(context: context, mensaje: registro["errors"][0]["msg"]);
+        if (!registro["ok"]) return mostrarSnackBar(context: context, mensaje:'Error al registrar usuario');
+
+        provider.pin='';
+
+        Navigator.pushNamed(context, 'pin_validacion', arguments: registro["usuario"]);
+      
       },
     );
   }

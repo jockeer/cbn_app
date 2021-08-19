@@ -39,15 +39,40 @@ class UsuarioService {
 
   Future registrarUsuario( CustomerModel customer ) async {
     final url = Uri.http(constantes.dominio, 'api/user');
-    final customernuevo = jsonEncode(customer.toJson()); 
+    // final customernuevo = jsonEncode(customer.toJson()); 
+    final parametros ={
+      "user_email":customer.email,
+      "customer":customer
+    };
     
     final respuesta = await http.post(url,
-      body:customernuevo,
+      body:jsonEncode(parametros),
       headers: {
         "Content-Type":"application/json"
       }
     );
-    print(respuesta);
+
+    final respDecoded = await jsonDecode(respuesta.body);
+    return respDecoded;
+  }
+
+  Future validarPin( int pin, int idCustomer ) async {
+    final url = Uri.http(constantes.dominio, 'api/user/$idCustomer');
+    // final customernuevo = jsonEncode(customer.toJson()); 
+    final parametros = {
+      "pin":pin,
+    };
+    
+    
+    final respuesta = await http.put(url,
+      body:jsonEncode(parametros),
+      headers: {
+        "Content-Type":"application/json"
+      }
+    );
+
+    final respDecoded = await jsonDecode(respuesta.body);
+    return respDecoded;
   }
 
 }
