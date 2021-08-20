@@ -32,7 +32,7 @@ class _Menu extends StatelessWidget {
         SizedBox(height: 10,),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'perfil', img:'glosario.jpg', icon: 'lupa.png',)),
+            Expanded(child: _MenuItem(titulo: 'Beneficios', ruta: 'cupon_gifcard', img:'beneficios.jpg', icon: 'inbo.png',)),
             Expanded(child: _MenuItem(titulo: 'Calculadora (IVA)', ruta: 'cupon_gifcard', img:'iva.jpg', icon: 'calculadora.png',)),
           ],
         ),
@@ -44,8 +44,8 @@ class _Menu extends StatelessWidget {
         ),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard', img:'glosario.jpg', icon: 'inbo.png',)),
-            Expanded(child: _MenuItem(titulo: 'Beneficios', ruta: 'cupon_gifcard', img:'visualizador.jpg', icon: 'inbo.png',)),
+            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard', img:'inbox.jpg', icon: 'inbo.png',)),
+            Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'perfil', img:'glosario.jpg', icon: 'lupa.png',)),
           ],
         ),
       ],

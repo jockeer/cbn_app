@@ -181,15 +181,15 @@ class _BotonRegistro extends StatelessWidget {
         if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
         
         loading(titulo: 'Registrando...', context: context);
-        final registro = await usuarioService.registrarUsuario(this.customer);
+        final registro = await usuarioService.registrarUsuario(this.customer, provider.foto! );
         Navigator.pop(context);
 
-        if (registro.containsKey("errors")) return mostrarSnackBar(context: context, mensaje: registro["errors"][0]["msg"]);
+       if (registro.containsKey("errors")) return mostrarSnackBar(context: context, mensaje: registro["errors"][0]["msg"]);
         if (!registro["ok"]) return mostrarSnackBar(context: context, mensaje:'Error al registrar usuario');
 
-        provider.pin='';
+       provider.pin='';
 
-        Navigator.pushNamed(context, 'pin_validacion', arguments: registro["usuario"]);
+       Navigator.pushNamed(context, 'pin_validacion', arguments: registro["usuario"]);
       
       },
     );

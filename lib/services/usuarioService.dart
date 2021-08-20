@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cbn/models/customer.dart';
 import 'package:cbn/utils/constantes.dart';
@@ -38,22 +39,17 @@ class UsuarioService {
     return customer;
   }
 
-  Future registrarUsuario( CustomerModel customer ) async {
-    final url = Uri.http(constantes.dominio, 'api/user');
-    // final customernuevo = jsonEncode(customer.toJson()); 
-    final parametros ={
-      "user_email":customer.email,
-      "customer":customer
-    };
-    
-    final respuesta = await http.post(url,
-      body:jsonEncode(parametros),
-      headers: {
-        "Content-Type":"application/json"
-      }
-    );
+  Future registrarUsuario( CustomerModel customer, File foto ) async {
 
-    final respDecoded = await jsonDecode(respuesta.body);
+    final url = Uri.http(constantes.dominio, 'api/user');
+    
+    final imageUploadRequest = http.MultipartRequest('POST',url)
+    ..fields['user_email'] = customer.email!
+    ..fields['customer'] = jsonEncode(customer) 
+    ..files.add(await http.MultipartFile.fromPath('archivo', foto.path));
+    final streamReponse = await imageUploadRequest.send();
+    final resp = await http.Response.fromStream(streamReponse);
+    final respDecoded = await jsonDecode(resp.body);
     return respDecoded;
   }
 
