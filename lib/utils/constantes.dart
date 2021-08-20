@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DatosConstantes{
-  String dominio = '10.0.2.2:8080';
+  String dominio = '10.0.2.2:4000';
 }
 
 class ColoresApp{

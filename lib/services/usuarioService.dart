@@ -31,6 +31,7 @@ class UsuarioService {
   Future obtenerUsuarios({required String legajo,required String ci }) async {
     final url = Uri.http(constantes.dominio, 'api/customer/$legajo/$ci');
     final respuesta = await http.get(url);
+    if(respuesta.statusCode==404) return null;
     final decoded = await json.decode(respuesta.body);
     if (!decoded["ok"]) return null;
     final customer = CustomerModel.fromJson(decoded["data"]); 

@@ -7,6 +7,7 @@ import 'package:cbn/utils/validator.dart';
 import 'package:cbn/utils/verificar_internet.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:cbn/widgets/top_logo.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -117,7 +118,8 @@ class _PinCard extends StatelessWidget {
                     final validarPin = await usuarioService.validarPin( int.parse(provider.pin), this.usuario["id"] );
                     Navigator.pop(context);
                     if (!validarPin["ok"]) return mostrarSnackBar(context: context, mensaje: 'pin no valido');
- 
+                    
+                    showDialog(context: context, builder: (context){ return SuccessAlert(titulo: 'Cuenta creada',);});
                     // Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));
                   }
                 ,
