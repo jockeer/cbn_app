@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -8,48 +7,57 @@ class CuponesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Cupones'),
-      body: ListView(
-        children: [
-          SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Cupon de prueba'),
-              SizedBox(width: 5,),
-              ElevatedButton(
-                style: estilos.buttonStyle(oscuro: true),
-                child: Text('Restablecer'),
-                onPressed: (){}, 
-              )
-            ],
-          ),
-          SizedBox(height: 20,),
-          Center(child: Text('Descuentos del 20%', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),)),
-          SizedBox(height: 10,),
-          
-          _Carousel(),
-          SizedBox(height: 20,),
-          _BotonCanjear(),
-          SizedBox(height: 20,),
-          Center(child: Text('Valido hasta agotar Stock')),
-          SizedBox(height: 20,),
-        ],
+      appBar: appBarWidget(titulo: 'Cuponera de descuentos'),
+      body: DefaultTabController(
+        length: 3,
+        child: Column(
+          children: [
+            TabBar(
+              labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              labelColor: Colors.black,
+              indicatorColor: Color(0xff2C225C),
+              indicatorWeight: 3,
+              tabs: [
+                Tab( child: Text('Tiendas',)),
+                Tab( child: Text('Categorias',)),
+                Tab( child: Text('Mi cuponera',)),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _Tiendas(),
+                  _Categorias(),
+                  Center(child: Text('ss'),),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class _BotonCanjear extends StatelessWidget {
+class _Categorias extends StatelessWidget {
 
-  final estilos = EstilosApp();
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        child: estilos.buttonChild(texto: 'Canjear'),
-        style: estilos.buttonStyle(oscuro: true),
-        onPressed: (){}, 
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: ListView(
+        children: [
+          Text('Bebidas',style: TextStyle( fontWeight: FontWeight.bold ),),
+          Divider(thickness: 2, color: Colors.black,),
+          _Carousel(),
+          Text('Salud',style: TextStyle( fontWeight: FontWeight.bold ),),
+          Divider(thickness: 2, color: Colors.black,),
+          _Carousel(),
+          Text('Snack',style: TextStyle( fontWeight: FontWeight.bold ),),
+          Divider(thickness: 2, color: Colors.black,),
+          _Carousel(),
+        
+        ],
       ),
     );
   }
@@ -59,39 +67,119 @@ class _Carousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
-      height: size.height*0.57,
-      color: Colors.grey[350],
-      child: CarouselSlider(
-        options: CarouselOptions(
-          height: size.height*0.55,
-          viewportFraction: 1,
-          enableInfiniteScroll: true,
-          autoPlay: true,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          scrollDirection: Axis.horizontal,
-          enlargeCenterPage: true
-
+      height: 210,
+      child: PageView(
+        physics: BouncingScrollPhysics(),
+        controller: PageController(
+          viewportFraction: 0.35,
+          initialPage: 1
         ),
-        items: [
-          Container(
-            width: double.infinity,
-            color: Colors.red,
+        children: [
+          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',),
+          _Item(titulo: 'Gaseosa pepsi 1L', img: 's', descuento: '10',),
+          _Item(titulo: 'Gaseosa Seven Up 2L', img: 's', descuento: '20',),
+          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '50',),
+        ],
+      ),
+    );
+  }
+}
 
-          ),
-          Container(
-            width: double.infinity,
-            color: Colors.blue,
+class _Item extends StatelessWidget {
+  final String titulo, img, descuento;
 
-          ),
-          Container(
-            width: double.infinity,
-            color: Colors.green,
+  _Item({ required this.titulo,required this.img, required this.descuento });
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 10,top: 5,bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: Offset(0, 0), // changes position of shadow
           ),
+        ]
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(this.titulo,style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.grey[700]),textAlign: TextAlign.center,),
+          SizedBox(height: 5,),
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            height: 25,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+              color: Colors.black,
+              
+            ),
+            child: Text('$descuento% de descuento', style: TextStyle(color: Colors.white,fontSize: 10, fontWeight: FontWeight.bold ),),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _Tiendas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: GridView.count(
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 20,
+        childAspectRatio: 0.7,
+        crossAxisCount: 3,
+        children: [
+          _Tienda(titulo: 'Farmacorp',cupones: '15',), 
+          _Tienda(titulo: 'Multicenter',cupones: '30',), 
+          _Tienda(titulo: 'Amarket',cupones: '10',), 
+          _Tienda(titulo: 'Fidalga',cupones: '20',), 
+          _Tienda(titulo: 'Sudamericana',cupones: '10',), 
+        ],
+      )
+    );
+  }
+}
+
+class _Tienda extends StatelessWidget {
+
+  final String titulo, cupones;
+
+  _Tienda({ required this.titulo, required this.cupones });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: Offset(0, 0), // changes position of shadow
+          ),
+        ]
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(this.titulo,style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.grey[700]),),
+          SizedBox(height: 5,),
+          Text('$cupones cupones disponibles',style: TextStyle(fontSize: 10, color: Colors.grey),),
+          SizedBox(height: 10,)
         ],
       ),
     );

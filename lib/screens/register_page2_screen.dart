@@ -244,7 +244,7 @@ class _FotoPerfil extends StatelessWidget {
             left: 0,
             child: Center(
               child: IconButton(
-                icon: Icon(Icons.add_photo_alternate, color: Colors.black, size: size.width*0.10,),
+                icon: Icon(Icons.collections_rounded, color: Colors.black, size: size.width*0.10,),
                 onPressed: () async{
                   final ImagePicker _picker = new ImagePicker();
                   final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);

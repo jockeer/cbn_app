@@ -23,15 +23,15 @@ class _Menu extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Tiendas Afiliadas', ruta: 'tiendas_afiliadas',),
+          _MenuItem(titulo: 'Tiendas Afiliadas', ruta: 'tiendas_afiliadas', img: 'map.png',),
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Cupones de descuentos', ruta: 'cupones',),
+          _MenuItem(titulo: 'Cupones de descuentos', ruta: 'cupones', img: 'cupon.png',),
          
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Tu Gift Card', ruta: 'tu_gift_card',),
+          _MenuItem(titulo: 'Tu Gift Card', ruta: 'tu_gift_card', img: 'gifcard.png',),
          
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Beneficios internos', ruta: 'recarga_gift_card',),
+          _MenuItem(titulo: 'Beneficios internos', ruta: 'recarga_gift_card', img: 'gift.png',),
           
           SizedBox(height: 20,),
         ],
@@ -41,9 +41,9 @@ class _Menu extends StatelessWidget {
 }
 
 class _MenuItem extends StatelessWidget {
-  final String titulo, ruta;
+  final String titulo, ruta, img;
 
-  _MenuItem({ required this.titulo, required this.ruta });
+  _MenuItem({ required this.titulo, required this.ruta, required this.img });
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +55,13 @@ class _MenuItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(35),
         child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[500],
+            image: DecorationImage(image: AssetImage('assets/img/$img'), fit: BoxFit.cover)
+          ),
           alignment: Alignment.bottomLeft,
           width: double.infinity,
           height: size.height*0.22,
-          color: Colors.grey[500],
           child: Container(
             width: double.infinity,
             color: Colors.black,
