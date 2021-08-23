@@ -225,10 +225,29 @@ class _FotoPerfil extends StatelessWidget {
             right: 0,
             child: Center(
               child: IconButton(
-                icon: Icon(Icons.camera_alt, color: Colors.black, size: size.width*0.13,),
+                icon: Icon(Icons.camera_alt, color: Colors.black, size: size.width*0.10,),
                 onPressed: () async {
                   final ImagePicker _picker = new ImagePicker();
                   final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+                  if (photo == null) {
+                    print('No selecciono nada');
+                    return;
+                  }
+                  print('tenemos imagen ${photo.path}');
+                  provider.updateSelectedFoto(photo.path);
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            child: Center(
+              child: IconButton(
+                icon: Icon(Icons.add_photo_alternate, color: Colors.black, size: size.width*0.10,),
+                onPressed: () async{
+                  final ImagePicker _picker = new ImagePicker();
+                  final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
                   if (photo == null) {
                     print('No selecciono nada');
                     return;

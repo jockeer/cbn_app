@@ -108,6 +108,7 @@ class _Carnet extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
+      obscureText: true,
       decoration: estilos.inputDecoration(hintText: 'Carnet de identidad'),
       validator: (value){
         provider.ci = value.toString();
