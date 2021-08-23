@@ -28,13 +28,47 @@ class CuponesScreen extends StatelessWidget {
                 children: [
                   _Tiendas(),
                   _Categorias(),
-                  Center(child: Text('ss'),),
+                  _MisCupones()
                 ],
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MisCupones extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Bebidas',style: TextStyle( fontWeight: FontWeight.bold ),),
+          Divider(thickness: 2, color: Colors.black,),
+          Expanded(
+            child: GridView.count(
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 0.7,
+                  crossAxisCount: 3,
+                  children: [
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+                  ],
+                ),
+          )
+        ],
+      )
     );
   }
 }
@@ -76,10 +110,10 @@ class _Carousel extends StatelessWidget {
           initialPage: 1
         ),
         children: [
-          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',),
-          _Item(titulo: 'Gaseosa pepsi 1L', img: 's', descuento: '10',),
-          _Item(titulo: 'Gaseosa Seven Up 2L', img: 's', descuento: '20',),
-          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '50',),
+          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30', color: Colors.black,),
+          _Item(titulo: 'Gaseosa pepsi 1L', img: 's', descuento: '10', color: Colors.black,),
+          _Item(titulo: 'Gaseosa Seven Up 2L', img: 's', descuento: '20', color: Colors.black,),
+          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '50', color: Colors.black,),
         ],
       ),
     );
@@ -88,13 +122,14 @@ class _Carousel extends StatelessWidget {
 
 class _Item extends StatelessWidget {
   final String titulo, img, descuento;
+  final Color color;
 
-  _Item({ required this.titulo,required this.img, required this.descuento });
+  _Item({ required this.titulo,required this.img, required this.descuento, required this.color });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 10,top: 5,bottom: 5),
+      margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
@@ -118,8 +153,7 @@ class _Item extends StatelessWidget {
             height: 25,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-              color: Colors.black,
-              
+              color: this.color,
             ),
             child: Text('$descuento% de descuento', style: TextStyle(color: Colors.white,fontSize: 10, fontWeight: FontWeight.bold ),),
           )

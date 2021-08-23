@@ -115,9 +115,9 @@ class _PinCard extends StatelessWidget {
                     final internet = await comprobarInternet();
                     if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
                     loading(titulo: 'Validando pin...', context: context);
-                    final validarPin = await usuarioService.validarPin( int.parse(provider.pin), this.usuario["id"] );
+                    // final validarPin = await usuarioService.validarPin( int.parse(provider.pin), this.usuario["id"] );
                     Navigator.pop(context);
-                    if (!validarPin["ok"]) return mostrarSnackBar(context: context, mensaje: 'pin no valido');
+                    // if (!validarPin["ok"]) return mostrarSnackBar(context: context, mensaje: 'pin no valido');
                     
                     showDialog(context: context, builder: (context){ return SuccessAlert(titulo: 'Cuenta creada',);});
                     // Navigator.pushNamedAndRemoveUntil(context, 'login', ModalRoute.withName('welcome'));

@@ -1,4 +1,4 @@
-package com.example.cbn
+package com.loyaltyclubs.peopleCBN
 
 import io.flutter.embedding.android.FlutterActivity
 

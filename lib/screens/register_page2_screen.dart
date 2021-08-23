@@ -174,14 +174,14 @@ class _BotonRegistro extends StatelessWidget {
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Registrar'),
-      onPressed: ()async{
+      onPressed: () async {
         if(!this.formState.currentState!.validate()) return null;
         if (provider.birthday.isEmpty) return mostrarSnackBar(context: context, mensaje: "elija su fecha de nacimiento");
         final internet = await comprobarInternet();
         if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
-        
+
         loading(titulo: 'Registrando...', context: context);
-        final registro = await usuarioService.registrarUsuario(this.customer, provider.foto! );
+        final registro = await usuarioService.registrarUsuario(this.customer, provider.foto );
         Navigator.pop(context);
 
        if (registro.containsKey("errors")) return mostrarSnackBar(context: context, mensaje: registro["errors"][0]["msg"]);
@@ -231,6 +231,7 @@ class _FotoPerfil extends StatelessWidget {
                   final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
                   if (photo == null) {
                     print('No selecciono nada');
+                    provider.updateSelectedFoto('assets/icons/logoNegroCBN.png');
                     return;
                   }
                   print('tenemos imagen ${photo.path}');
@@ -250,6 +251,7 @@ class _FotoPerfil extends StatelessWidget {
                   final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
                   if (photo == null) {
                     print('No selecciono nada');
+                    provider.updateSelectedFoto('assets/icons/logoNegroCBN.png');
                     return;
                   }
                   print('tenemos imagen ${photo.path}');
