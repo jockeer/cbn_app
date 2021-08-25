@@ -1,3 +1,4 @@
+import 'package:cbn/services/tiendaService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -164,38 +165,48 @@ class _Item extends StatelessWidget {
 }
 
 class _Tiendas extends StatelessWidget {
+  final tiendaService = TiendaService();
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
-      child: GridView.count(
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 20,
-        childAspectRatio: 0.7,
-        crossAxisCount: 3,
-        children: [
-          _Tienda(titulo: 'Farmacorp',cupones: '15',), 
-          _Tienda(titulo: 'Multicenter',cupones: '30',), 
-          _Tienda(titulo: 'Amarket',cupones: '10',), 
-          _Tienda(titulo: 'Fidalga',cupones: '20',), 
-          _Tienda(titulo: 'Sudamericana',cupones: '10',), 
-        ],
-      )
+      child: FutureBuilder(
+        future: tiendaService.cargarTiendas(),
+        builder: ( _ , AsyncSnapshot snapshot){
+          if (snapshot.hasData) {
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 20,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 8
+              ),
+              itemCount: snapshot.data.length,
+              itemBuilder: ( BuildContext context , int index ){
+                return _Tienda(titulo: snapshot.data[index]["name"], cupones: '15', logo: snapshot.data[index]["logo"],);
+              },
+            );
+          }
+          return Center(child: CircularProgressIndicator(),);
+        },
+      ) 
     );
   }
 }
 
 class _Tienda extends StatelessWidget {
 
-  final String titulo, cupones;
+  final String titulo, cupones, logo;
+  final constantes = DatosConstantes();
 
-  _Tienda({ required this.titulo, required this.cupones });
+  _Tienda({ required this.titulo, required this.cupones, required this.logo });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(2),
       decoration: BoxDecoration(
+        image: DecorationImage(image: NetworkImage('http://${constantes.dominio}/uploads/logoTienda/$logo')),
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
         boxShadow: [

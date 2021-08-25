@@ -6,6 +6,8 @@
         android:label="People CBN"
         android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAsv6DqikjrtZWPMnWmQzYCB822TAb3Ugg"/>
         
         <activity
             android:name=".MainActivity"
