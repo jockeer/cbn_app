@@ -9,7 +9,7 @@ class TiendaService {
     final prefs = PreferenciasUsuario();
 
     Future cargarTiendas() async {
-      final url = Uri.http(constantes.dominio, 'api/tienda');
+      final url = Uri.https(constantes.dominio, 'api/tienda');
 
       final respuesta = await http.get(
         url,

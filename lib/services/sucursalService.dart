@@ -11,7 +11,7 @@ class SucursalService{
   final prefs = PreferenciasUsuario();
 
   Future cargarSucursales (BuildContext context) async {
-    final url = Uri.http(constantes.dominio, 'api/sucursal');
+    final url = Uri.https(constantes.dominio, 'api/sucursal');
 
     final respuesta = await http.get(url);
 

@@ -1,3 +1,5 @@
+import 'package:cbn/screens/calculadora_screen.dart';
+import 'package:cbn/screens/glosario_screen.dart';
 import 'package:cbn/screens/informa_screen.dart';
 import 'package:cbn/screens/perfil_screen.dart';
 import 'package:cbn/screens/pin_validacion.dart';
@@ -36,6 +38,8 @@ Map<String, WidgetBuilder> getRoutes(){
     'perfil' : (_)=> PerfilScreen(),
     'informa' : (_)=> InformaScreen(),
     'validacion' : (_)=> RegisterValidationScreen(),
-    'pin_validacion' : (_)=> PinValidationScreen()
+    'pin_validacion' : (_)=> PinValidationScreen(),
+    'glosario' : (_)=> GlosarioScreen(),
+    'calculadora' : (_)=> CalculadoraScreen(),
   };
 }

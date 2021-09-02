@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DatosConstantes{
-  String dominio = '10.0.2.2:8080';
+  String dominio = 'interna-cbn.herokuapp.com';
+  // String dominio = '10.0.2.2:8080';
 }
 
 class ColoresApp{
@@ -11,8 +12,9 @@ class ColoresApp{
 
 class EstilosApp{
 
-  ButtonStyle buttonStyle({ bool oscuro = false }){
+  ButtonStyle buttonStyle({ bool oscuro = false, bool largo = false }){
     return ElevatedButton.styleFrom(
+        minimumSize: (largo) ?  Size(double.infinity, 0):null,
         primary: (oscuro)? Colors.black : ColoresApp().botonClaro,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50.0),

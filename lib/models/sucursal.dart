@@ -15,9 +15,6 @@ class Sucursales{
   Sucursales.fromJsonList(List<dynamic> jsonList, BuildContext context){
     final size = MediaQuery.of(context).size;
     final estilos = EstilosApp();
-    // if (jsonList==null) {
-    //   return;
-    // }
     jsonList.forEach((item) {
       final sucursal = Sucursal.fromJson(item);
       markers.add(new Marker(
@@ -40,24 +37,15 @@ class Sucursales{
                   SizedBox(height: 10,),
                   Text('Sucursal Autorizada', style: TextStyle( fontSize: size.width*0.04, fontWeight: FontWeight.bold ),),
                   Expanded(child: Container()),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          child: estilos.buttonChild(texto: 'Ruta'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ),
-                      SizedBox(width: 40,),
-                      Expanded(
-                        child: ElevatedButton(
-                          style: estilos.buttonStyle(oscuro: true),
-                          child: estilos.buttonChild(texto: 'Cupones'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ),
-                    ],
+                  
+                  ElevatedButton(
+                      style: estilos.buttonStyle(oscuro: true, largo: true),
+                      child: estilos.buttonChild(texto: 'Cupones'),
+                      onPressed: () => Navigator.pop(context),
                   ),
+                  
+                      
+                  
                   SizedBox(height: 20,),
                 ],
               ),

@@ -50,6 +50,7 @@ class RegisterPage2Screen extends StatelessWidget {
 }
 
 class _Info extends StatelessWidget {
+  
 
   @override
   Widget build(BuildContext context) {

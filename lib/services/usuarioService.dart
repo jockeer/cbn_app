@@ -14,7 +14,7 @@ class UsuarioService {
     if (legajo == '9001961' && ci == '123456') {
       return 1;
     }
-    final url = Uri.http(constantes.dominio, 'api/auth/login');
+    final url = Uri.https(constantes.dominio, 'api/auth/login');
     final parametros = {
         "legajo":legajo,
         "ci":ci
@@ -38,7 +38,7 @@ class UsuarioService {
       final customer = CustomerModel.fromJson(decoded["data"]);
       return customer;
     }
-    final url = Uri.http(constantes.dominio, 'api/customer/$legajo/$ci');
+    final url = Uri.https(constantes.dominio, 'api/customer/$legajo/$ci');
     final respuesta = await http.get(url);
     if(respuesta.statusCode==404) return null;
     final decoded = await json.decode(respuesta.body);
@@ -54,7 +54,7 @@ class UsuarioService {
       return respDecoded;
     }
 
-    final url = Uri.http(constantes.dominio, 'api/user');
+    final url = Uri.https(constantes.dominio, 'api/user');
     
     final imageUploadRequest = http.MultipartRequest('POST',url)
     ..fields['user_email'] = customer.email!
@@ -67,7 +67,7 @@ class UsuarioService {
   }
 
   Future validarPin( int pin, int idCustomer ) async {
-    final url = Uri.http(constantes.dominio, 'api/user/$idCustomer');
+    final url = Uri.https(constantes.dominio, 'api/user/$idCustomer');
     // final customernuevo = jsonEncode(customer.toJson()); 
     final parametros = {
       "pin":pin,
