@@ -1,7 +1,11 @@
+import 'package:cbn/models/perfil.dart';
+import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:flutter/material.dart';
 
 class PerfilScreen extends StatelessWidget {
+
+  final usuarioService = UsuarioService();
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +20,21 @@ class PerfilScreen extends StatelessWidget {
       ],
     ),
       body: SafeArea(
-        child: ListView(
-          children: [
-            SizedBox(height: 10,),
-            _FotoPerfil(),
-            SizedBox(height: 10,),
-            _Datos(),
-          ],
+        child: FutureBuilder(
+          future: usuarioService.cargarPerfil(),
+          builder: ( _ , AsyncSnapshot<PerfilModel> snapshot){
+            if (snapshot.hasData) {
+              return ListView(
+                children: [
+                  SizedBox(height: 10,),
+                  _FotoPerfil(foto: snapshot.data!.foto),
+                  SizedBox(height: 10,),
+                  _Datos()
+                ],
+              );
+            }
+            return Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
@@ -31,27 +43,25 @@ class PerfilScreen extends StatelessWidget {
 
 class _FotoPerfil extends StatelessWidget {
   final colores = ColoresApp();
-
+  final foto;
+  final constantes = DatosConstantes();
+  _FotoPerfil({ required this.foto });
   @override
   Widget build(BuildContext context) {
-    
-    return Container(
-      alignment: Alignment.center,
-      height: 160,
+    final size = MediaQuery.of(context).size;
+    return Center(
       child: Container(
-        width: 160,
-        height: 160,
+        width: size.width*0.4,
+        height: size.width*0.4,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/img/foto.jpg'), fit: BoxFit.cover),
-          border: Border.all(width: 7, color: colores.plomo),
           borderRadius: BorderRadius.circular(500),
+          image: DecorationImage(image: NetworkImage('${constantes.dominio}/uploads/fotoPerfil/$foto'),fit: BoxFit.cover)
         ),
-        // child: Image(image: AssetImage('assets/img/foto.jpg')),
+        
       ),
     );
   }
 }
-
 
 class _Datos extends StatelessWidget {
 

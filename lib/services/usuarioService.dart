@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cbn/models/customer.dart';
+import 'package:cbn/models/perfil.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class UsuarioService {
     if (legajo == '9001961' && ci == '123456') {
       return 1;
     }
-    final url = Uri.https(constantes.dominio, 'api/auth/login');
+    final url = Uri.parse('${constantes.dominio}/api/auth/login');
     final parametros = {
         "legajo":legajo,
         "ci":ci
@@ -38,10 +39,11 @@ class UsuarioService {
       final customer = CustomerModel.fromJson(decoded["data"]);
       return customer;
     }
-    final url = Uri.https(constantes.dominio, 'api/customer/$legajo/$ci');
+    final url = Uri.parse('${constantes.dominio}/api/customer/$legajo/$ci');
     final respuesta = await http.get(url);
     if(respuesta.statusCode==404) return null;
     final decoded = await json.decode(respuesta.body);
+    if (decoded.containsKey("errors")) return 0; 
     if (!decoded["ok"]) return null;
     final customer = CustomerModel.fromJson(decoded["data"]); 
     return customer;
@@ -54,7 +56,7 @@ class UsuarioService {
       return respDecoded;
     }
 
-    final url = Uri.https(constantes.dominio, 'api/user');
+    final url = Uri.parse('${constantes.dominio}/api/user');
     
     final imageUploadRequest = http.MultipartRequest('POST',url)
     ..fields['user_email'] = customer.email!
@@ -67,7 +69,7 @@ class UsuarioService {
   }
 
   Future validarPin( int pin, int idCustomer ) async {
-    final url = Uri.https(constantes.dominio, 'api/user/$idCustomer');
+    final url = Uri.parse('${constantes.dominio}/api/user/$idCustomer');
     // final customernuevo = jsonEncode(customer.toJson()); 
     final parametros = {
       "pin":pin,
@@ -85,4 +87,38 @@ class UsuarioService {
     return respDecoded;
   }
 
+  Future reenviarPIN(dynamic usuario) async {
+    final url = Uri.parse('${constantes.dominio}/api/user/renviarPin');
+
+    print(usuario);
+    final parametros = {
+      "customer_id" : usuario["customer_id"]
+    };
+
+    try {
+      final respuesta = await http.post(url,
+        body:jsonEncode(parametros),
+        headers: {
+          "Content-Type":"application/json"
+        }
+      );
+      return 1;
+      
+    } catch (e) {
+      return null;
+    }
+
+  }
+
+  Future<PerfilModel> cargarPerfil() async {
+    final url = Uri.parse('${constantes.dominio}/api/customer/perfil');
+    final resp = await http.get(url,headers: {
+      'x-token': prefs.token
+    });
+
+    final respDecoded = await jsonDecode(resp.body);
+    
+    final perfil = PerfilModel.fromJson(respDecoded["perfil"]);
+    return perfil;
+  }
 }

@@ -232,7 +232,6 @@ class _FotoPerfil extends StatelessWidget {
                   final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
                   if (photo == null) {
                     print('No selecciono nada');
-                    provider.updateSelectedFoto('assets/icons/logoNegroCBN.png');
                     return;
                   }
                   print('tenemos imagen ${photo.path}');
@@ -252,7 +251,6 @@ class _FotoPerfil extends StatelessWidget {
                   final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
                   if (photo == null) {
                     print('No selecciono nada');
-                    provider.updateSelectedFoto('assets/icons/logoNegroCBN.png');
                     return;
                   }
                   print('tenemos imagen ${photo.path}');

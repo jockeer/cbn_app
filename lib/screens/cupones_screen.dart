@@ -206,7 +206,7 @@ class _Tienda extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(2),
       decoration: BoxDecoration(
-        image: DecorationImage(image: NetworkImage('http://${constantes.dominio}/uploads/logoTienda/$logo')),
+        image: DecorationImage(image: NetworkImage('${constantes.dominio}/uploads/logoTienda/$logo')),
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
         boxShadow: [
