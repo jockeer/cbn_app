@@ -39,12 +39,12 @@ class _Menu extends StatelessWidget {
         Row(
           children: [
             Expanded(child: _MenuItem(titulo: 'Informa', ruta: 'informa',  icon: 'megafono.png',)),
-            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'cupon_gifcard', icon: 'gestion.png',)),
+            Expanded(child: _MenuItem(titulo: 'Gestión institucional', ruta: 'gestion', icon: 'gestion.png',)),
           ],
         ),
         Row(
           children: [
-            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'cupon_gifcard',  icon: 'inbo.png',)),
+            Expanded(child: _MenuItem(titulo: 'InBox', ruta: 'inbox',  icon: 'inbo.png',)),
             Expanded(child: _MenuItem(titulo: 'Glosario', ruta: 'glosario', icon: 'glosario.png',)),
           ],
         ),

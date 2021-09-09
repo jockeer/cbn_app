@@ -29,12 +29,12 @@ class EstilosApp{
     );
   }
 
-  InputDecoration inputDecoration({required String hintText, double padingTop = 0.0}){
+  InputDecoration inputDecoration({required String hintText, double padingTop = 0.0, bool circular = true}){
     return InputDecoration(
       contentPadding: EdgeInsets.symmetric(vertical: padingTop, horizontal: 15.0),
       hintText: hintText,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
-      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black26),borderRadius: BorderRadius.circular(50.0)),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular((circular)?50.0:0.0)),
+      enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black26),borderRadius: BorderRadius.circular((circular)?50.0:0.0)),
       filled:true,
       fillColor: Colors.white
     );

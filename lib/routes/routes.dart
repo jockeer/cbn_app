@@ -1,5 +1,9 @@
 import 'package:cbn/screens/calculadora_screen.dart';
+import 'package:cbn/screens/cupon_select_screen.dart';
+import 'package:cbn/screens/gestion_screen.dart';
 import 'package:cbn/screens/glosario_screen.dart';
+import 'package:cbn/screens/inbox_screen.dart';
+import 'package:cbn/screens/informa_detail_screen.dart';
 import 'package:cbn/screens/informa_screen.dart';
 import 'package:cbn/screens/perfil_screen.dart';
 import 'package:cbn/screens/pin_validacion.dart';
@@ -37,9 +41,13 @@ Map<String, WidgetBuilder> getRoutes(){
     'metodo_pago' : (_)=> MetodoPagoScreen(),
     'perfil' : (_)=> PerfilScreen(),
     'informa' : (_)=> InformaScreen(),
+    'infodetail' : (_)=> InformaDetailScreen(),
     'validacion' : (_)=> RegisterValidationScreen(),
     'pin_validacion' : (_)=> PinValidationScreen(),
     'glosario' : (_)=> GlosarioScreen(),
     'calculadora' : (_)=> CalculadoraScreen(),
+    'inbox' : (_)=> InboxScreen(),
+    'gestion' : (_)=> GestionScreen(),
+    'cupon_select' : (_)=> CuponSeleccionadoScreen(),
   };
 }

@@ -1,3 +1,4 @@
+import 'package:cbn/services/cuponesService.dart';
 import 'package:cbn/services/tiendaService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
@@ -52,21 +53,22 @@ class _MisCupones extends StatelessWidget {
           Text('Bebidas',style: TextStyle( fontWeight: FontWeight.bold ),),
           Divider(thickness: 2, color: Colors.black,),
           Expanded(
-            child: GridView.count(
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: 0.7,
-                  crossAxisCount: 3,
-                  children: [
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                    _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
-                  ],
-                ),
+            child: Text('ss'),
+            // child: GridView.count(
+            //       crossAxisSpacing: 8,
+            //       mainAxisSpacing: 20,
+            //       childAspectRatio: 0.7,
+            //       crossAxisCount: 3,
+            //       children: [
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //         _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30',color: Colors.green,),
+            //       ],
+            //     ),
           )
         ],
       )
@@ -76,23 +78,35 @@ class _MisCupones extends StatelessWidget {
 
 class _Categorias extends StatelessWidget {
 
+  final cuponesService = CuponesService();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
-      child: ListView(
-        children: [
-          Text('Bebidas',style: TextStyle( fontWeight: FontWeight.bold ),),
-          Divider(thickness: 2, color: Colors.black,),
-          _Carousel(),
-          Text('Salud',style: TextStyle( fontWeight: FontWeight.bold ),),
-          Divider(thickness: 2, color: Colors.black,),
-          _Carousel(),
-          Text('Snack',style: TextStyle( fontWeight: FontWeight.bold ),),
-          Divider(thickness: 2, color: Colors.black,),
-          _Carousel(),
-        
-        ],
+      child: FutureBuilder(
+        future: cuponesService.obtenerCuponesCat(),
+        builder: ( _, AsyncSnapshot snapshot){
+          if (snapshot.hasData) {
+            final List<dynamic> list = snapshot.data["categorias"];
+            list.forEach((element) { });
+            return ListView(
+              
+              children: list.map((categoria){
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(categoria,style: TextStyle( fontWeight: FontWeight.bold ),),
+                    Divider(thickness: 2, color: Colors.black,),
+                    _Carousel(lista: snapshot.data["data"][categoria],),
+                  ],
+                );
+              }).toList(),
+              
+            );
+          }
+          return Center(child: CircularProgressIndicator(),);
+        },
       ),
     );
   }
@@ -100,65 +114,79 @@ class _Categorias extends StatelessWidget {
 
 class _Carousel extends StatelessWidget {
 
+  final List<dynamic> lista;
+
+  _Carousel({ required this.lista });
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
-      height: 210,
+      height: size.width*0.5,
       child: PageView(
         physics: BouncingScrollPhysics(),
         controller: PageController(
-          viewportFraction: 0.35,
+          viewportFraction: 0.33,
           initialPage: 1
         ),
-        children: [
-          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '30', color: Colors.black,),
-          _Item(titulo: 'Gaseosa pepsi 1L', img: 's', descuento: '10', color: Colors.black,),
-          _Item(titulo: 'Gaseosa Seven Up 2L', img: 's', descuento: '20', color: Colors.black,),
-          _Item(titulo: 'Agua Vital 350ml', img: 's', descuento: '50', color: Colors.black,),
-        ],
+        children: this.lista.map((cupon){
+          return _Item(cupon: cupon , color: Colors.black);
+          // return _Item(titulo: cupon["nombre"], img: cupon["foto"], descuento: cupon["descuento"].toString(), color: Colors.black);
+        }).toList(),
       ),
     );
   }
 }
 
 class _Item extends StatelessWidget {
-  final String titulo, img, descuento;
+  final dynamic cupon;
   final Color color;
+  final constantes = DatosConstantes();
 
-  _Item({ required this.titulo,required this.img, required this.descuento, required this.color });
+  _Item({ required this.cupon, required this.color });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 2,
-            offset: Offset(0, 0), // changes position of shadow
-          ),
-        ]
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(this.titulo,style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.grey[700]),textAlign: TextAlign.center,),
-          SizedBox(height: 5,),
-          Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: 25,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-              color: this.color,
+    final size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, 'cupon_select', arguments: this.cupon);
+      },
+      child: Container(
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          // image: DecorationImage(image: NetworkImage('${constantes.dominio}/uploads/fotoCupon/$img')),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 2,
+              offset: Offset(0, 0), // changes position of shadow
             ),
-            child: Text('$descuento% de descuento', style: TextStyle(color: Colors.white,fontSize: 10, fontWeight: FontWeight.bold ),),
-          )
-        ],
+          ]
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 15,),
+            Container(width: size.width*0.3,height: size.width*0.22, child: Image(image: NetworkImage('${constantes.dominio}/uploads/fotoCupon/${this.cupon["foto"]}'),)),
+            Expanded(child: Container()),
+            Text(this.cupon["nombre"],style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold, color: Colors.grey[700]),textAlign: TextAlign.center,),
+            SizedBox(height: 5,),
+            Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: 25,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+                color: this.color,
+              ),
+              child: Text('${this.cupon["descuento"]}% de descuento', style: TextStyle(color: Colors.white,fontSize: 10, fontWeight: FontWeight.bold ),),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -183,7 +211,7 @@ class _Tiendas extends StatelessWidget {
               ),
               itemCount: snapshot.data.length,
               itemBuilder: ( BuildContext context , int index ){
-                return _Tienda(titulo: snapshot.data[index]["name"], cupones: '15', logo: snapshot.data[index]["logo"],);
+                return _Tienda(titulo: snapshot.data[index]["name"], cupones: snapshot.data[index]["cupones"].toString(), logo: snapshot.data[index]["logo"],);
               },
             );
           }
