@@ -1,5 +1,6 @@
 import 'package:cbn/services/infoService.dart';
-import 'package:cbn/widgets/widgets.dart';
+import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:flutter/material.dart';
 
 class GlosarioScreen extends StatelessWidget {
@@ -9,58 +10,83 @@ class GlosarioScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Glosario',centrado: true),
       body: SafeArea(
-        child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                child: Row(
-                  children: [
-                    Text('Acronimo', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16 ) ,),
-                    Expanded(child: Container()),
-                    Text('Definicion', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16 ) ,),
-                    Expanded(child: Container()),
-                  ],
-                ),
+        child: Stack(
+          children: [
+            FondoPantalla(img: 'fondoWhite.png'),
+            Column(
+                children: [
+                  _Encabezado(),
+                  _Glosarios(),
+                ],
               ),
-              Expanded(
-                child: FutureBuilder(
-                    future: infoService.obtenerGlosario(),
-                    builder: ( _ , AsyncSnapshot snapshot){
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: ( _, index){
-                            return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30),
-                              child: Container(
-                                padding: EdgeInsets.all(10),
-                                color: (index % 2 == 0)? Colors.grey[400] : Colors.grey[200],
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(snapshot.data[index]["acronimo"], style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14 ),),
-                                    Text(snapshot.data[index]["definicion"], style: TextStyle( fontSize: 14 ),),
-                                  ],
-                                )
-                              ),
-                              // child: ListTile(
-                              //   tileColor: (index % 2 == 0)? Colors.grey[400] : Colors.grey[200],
-                              //   title: Text(snapshot.data[index]["acronimo"] ),
-                              //   trailing: Text(snapshot.data[index]["definicion"]),
-                              // ),
-                            );
-                          },
-                        );
-                      }
-                      return Center(child: CircularProgressIndicator(),);
-                    },
-                  ),
-              ),
-            ],
-          ),
+
+          ],
+        ),
         
+      ),
+    );
+  }
+}
+
+class _Glosarios extends StatelessWidget {
+  final infoService = InfoService();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Expanded(
+      child: FutureBuilder(
+          future: infoService.obtenerGlosario(),
+          builder: ( _ , AsyncSnapshot snapshot){
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: ( _, index){
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child:Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container( alignment: Alignment.center ,width: size.width * 0.2 ,child: Text(snapshot.data[index]["acronimo"], style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14 ),)),
+                          Text(snapshot.data[index]["definicion"], style: TextStyle( fontSize: 14 ),),
+                        ],
+                      )
+                    ),
+                  );
+                },
+              );
+            }
+            return Center(child: CircularProgressIndicator(),);
+          },
+        ),
+    );
+  }
+}
+
+class _Encabezado extends StatelessWidget {
+
+  final colores = ColoresApp();
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: colores.naranjaClaro,
+        ),
+        child: Row(
+          children: [
+            Text('Acronimo', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white ) ,),
+            Expanded(child: Container()),
+            Text('Definicion', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white ) ,),
+            Expanded(child: Container()),
+          ],
+        ),
       ),
     );
   }

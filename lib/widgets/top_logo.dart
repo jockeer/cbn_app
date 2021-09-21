@@ -7,8 +7,8 @@ class TopLogoWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Center(
       child: Image(
-        image: AssetImage('assets/icons/logoNegroCBN.png'),
-        width: size.width * 0.35,
+        image: AssetImage('assets/icons/logonegro.png'),
+        width: size.width * 0.60,
       ),
     );
   }

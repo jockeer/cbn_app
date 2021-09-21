@@ -1,3 +1,4 @@
+
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,13 @@ class CuponGiftcardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Beneficios', centrado: true),
       body: SingleChildScrollView(
-        child: _Menu()
+        child: Column(
+          children: [
+            Header(titulo: 'Beneficios', logo: 'cbnInforma.png',),
+            _Menu(),
+          ],
+        )
       ),
     );
   }
@@ -22,6 +27,7 @@ class _Menu extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
+          
           SizedBox(height: 20,),
           _MenuItem(titulo: 'Tiendas Afiliadas', ruta: 'tiendas_afiliadas', img: 'map.png',),
           SizedBox(height: 20,),

@@ -30,7 +30,7 @@ class RegisterPage2Screen extends StatelessWidget {
         body: SafeArea(
           child: Stack(
               children: [
-                FondoPantalla(img: 'fondoblanco.png'),
+                  FondoPantalla(img: 'fondoblanco.png'),
                 SingleChildScrollView(
                   child: Column(
                     children: [
@@ -42,7 +42,7 @@ class RegisterPage2Screen extends StatelessWidget {
                 ),
               ],
             ),
-          
+
         ),
       ),
     );
@@ -50,7 +50,7 @@ class RegisterPage2Screen extends StatelessWidget {
 }
 
 class _Info extends StatelessWidget {
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class _Formulario extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Form(
@@ -93,7 +93,7 @@ class _Formulario extends StatelessWidget {
             _Interno(customer: this.customer,),
             estilos.inputLabel(label: 'Direccion'),
             _Address(customer: this.customer),
-            
+
             SizedBox(height: 30,),
             _BotonRegistro(formState: this.formState, customer: this.customer),
             SizedBox(height: 30,),
@@ -141,7 +141,7 @@ class _Interno extends StatelessWidget {
 }
 
 class _Cellphone extends StatelessWidget {
-  
+
   final CustomerModel customer;
   final estilos = EstilosApp();
 
@@ -155,7 +155,7 @@ class _Cellphone extends StatelessWidget {
       validator: (value){
         this.customer.cellphone=value;
         if (value!.isEmpty) return "El numero telefonico es obligatorio";
-        return null; 
+        return null;
       },
     );
   }
@@ -191,7 +191,7 @@ class _BotonRegistro extends StatelessWidget {
        provider.pin='';
 
        Navigator.pushNamed(context, 'pin_validacion', arguments: registro["usuario"]);
-      
+
       },
     );
   }
@@ -204,19 +204,19 @@ class _FotoPerfil extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final provider = Provider.of<RegistroProvider>(context);
     return Container(
-      width: 150,
-      height: 150,
+      width: size.width*0.45,
+      height: size.width*0.45,
       child: Stack(
         children: [
           (provider.foto == null)
-            ? Center(child: Image.asset('assets/icons/logoNegroCBN.png', width: size.width*0.5,))
+            ? Center(child: Image.asset('assets/icons/logonegro.png', width: size.width*0.5,))
             : Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(200),
                 child: Image.file(provider.foto!,
                   fit: BoxFit.cover,
-                  width: size.width*0.5,
-                  height: size.width*0.5,
+                  width: size.width*0.45,
+                  height: size.width*0.45,
                 ),
               ),
             )
@@ -290,14 +290,14 @@ class _FechaNacimiento extends StatelessWidget {
           lastDate: new DateTime(DateTime.now().year - 18)
         );
         if ( picked != null ) {
-      
+
            final fechaFormateada = DateFormat('yyyy-MM-dd').format(picked);
            provider.birthday = fechaFormateada.toString();
            this.customer.birthday = provider.birthday;
         }else{
           this.customer.birthday = null;
         }
-    
+
       },
     );
   }

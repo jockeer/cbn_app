@@ -1,6 +1,6 @@
 import 'package:cbn/services/infoService.dart';
 import 'package:cbn/utils/constantes.dart';
-import 'package:cbn/widgets/appbar.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InformaScreen extends StatelessWidget {
@@ -9,22 +9,30 @@ class InformaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: appBarWidget(titulo: 'CBN Informa',centrado: true),
       body: SafeArea(
-        child: FutureBuilder(
-          future: infoService.obtenerInformacion(),
-          builder: ( _, AsyncSnapshot snapshot ){
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: ( _ , index) {
-                  return _InfoCard(info: snapshot.data[index]);
+        child: Column(
+          children: [
+            Header(titulo: 'CBN Informa', logo: 'cbnInforma.png',),
+            SizedBox(height: 10,),
+            Expanded(
+              child: FutureBuilder(
+                future: infoService.obtenerInformacion(),
+                builder: ( _, AsyncSnapshot snapshot ){
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: ( _ , index) {
+                        return _InfoCard(info: snapshot.data[index]);
+                      },
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator(),);
                 },
-              );
-            }
-            return Center(child: CircularProgressIndicator(),);
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );

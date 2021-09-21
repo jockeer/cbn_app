@@ -36,9 +36,7 @@ class _Carousel extends StatelessWidget {
         scrollDirection: Axis.horizontal
       ),
       items: [
-        FondoPantalla(img: 'fondo1.png',),
-        FondoPantalla(img: 'fondo2.png',),
-        FondoPantalla(img: 'fondo3.png',),
+        FondoPantalla(img: 'fondo.png',),
         
       ],
     );
@@ -57,10 +55,11 @@ class _Buttons extends StatelessWidget {
       right: 0,
       child: Row(
         children: [
-          SizedBox(width: 10,),
+          SizedBox(width: 20,),
           Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'login'); }, child: estilos.buttonChild(texto: 'Ingresa'), style: estilos.buttonStyle(),)),
-          Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'validacion'); }, child: estilos.buttonChild(texto: 'Regístrate'), style: estilos.buttonStyle(),)),
           SizedBox(width: 10,),
+          Expanded(child: ElevatedButton(onPressed: (){ Navigator.pushNamed(context, 'validacion'); }, child: estilos.buttonChild(texto: 'Regístrate'), style: estilos.buttonStyle(),)),
+          SizedBox(width: 20,),
         ],
       ),
     );

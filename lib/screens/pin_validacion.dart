@@ -79,7 +79,7 @@ class _PinCard extends StatelessWidget {
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Text('Para poder ver tu PIN de validacion presiona el boton ver PIN de validacion en la parte inferior de la pantalla', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
+              Text('Revisa tu correo o espera un mensaje con tu PIN de validacion y luego dale al boton Validar PIN', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
               SizedBox(height: 20,),
               TextFormField(
                 keyboardType: TextInputType.phone,
@@ -93,7 +93,7 @@ class _PinCard extends StatelessWidget {
 
               ElevatedButton(
                 style: estilos.buttonStyle(),
-                child: estilos.buttonChild(texto: 'Validad PIN'),
+                child: estilos.buttonChild(texto: 'Validar PIN'),
                 onPressed: (provider.pin.isEmpty || provider.pin.length < 4)
                   ? null
                   : () async {

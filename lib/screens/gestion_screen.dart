@@ -1,5 +1,5 @@
 import 'package:cbn/services/infoService.dart';
-import 'package:cbn/widgets/appbar.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,17 +10,13 @@ class GestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Gestión institucional', centrado: true),
       body: SafeArea(
-        child: FutureBuilder(
-            future: infoService.obtenerGlosario(),
-            builder: ( _ , AsyncSnapshot snapshot){
-              if (snapshot.hasData) {
-                return Center(child: Text('datos'),);
-              }
-              return Center(child: CircularProgressIndicator(),);
-            },
-          )
+        child: Column(
+          children: [
+            Header(titulo: 'Gestion Institucional',logo: 'gestion.png',),
+            Expanded(child: ListView())
+          ],
+        )
       ),
     );
   }

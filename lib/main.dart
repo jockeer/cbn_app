@@ -1,5 +1,6 @@
 
 import 'package:cbn/providers/registro_provider.dart';
+import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,6 +19,7 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
+  final colores = ColoresApp();
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +47,10 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
-            elevation: 0
+            elevation: 0,
+  
           ),
+          canvasColor: Colors.black,
         ),
       ),
     );

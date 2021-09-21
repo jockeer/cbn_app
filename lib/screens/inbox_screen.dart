@@ -1,4 +1,5 @@
 import 'package:cbn/widgets/appbar.dart';
+import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InboxScreen extends StatelessWidget {
@@ -7,11 +8,12 @@ class InboxScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Inbox', centrado: true),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [ 
+              Header(titulo: 'Inbox', logo: 'inbo.png',),
+              SizedBox(height: 20,),
               Card(
                 child: Row(
                   children: [

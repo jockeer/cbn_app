@@ -14,7 +14,6 @@ class CalculadoraScreen extends StatelessWidget {
         if (!focus.hasPrimaryFocus && focus.hasFocus) return  FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
-        appBar: appBarWidget(titulo: 'Calculadora IVA', centrado: true),
         body: SafeArea(
           child: Stack(
             children: [

@@ -8,6 +8,8 @@ class DatosConstantes{
 class ColoresApp{
   Color botonClaro = Color(0xff87858A);
   Color plomo = Color(0xffB5B5B2);
+  Color naranja = Color(0xffE2551D);
+  Color naranjaClaro = Color(0xffFF530F);
 }
 
 class EstilosApp{
@@ -15,7 +17,7 @@ class EstilosApp{
   ButtonStyle buttonStyle({ bool oscuro = false, bool largo = false }){
     return ElevatedButton.styleFrom(
         minimumSize: (largo) ?  Size(double.infinity, 0):null,
-        primary: (oscuro)? Colors.black : ColoresApp().botonClaro,
+        primary: (oscuro)? Colors.black : ColoresApp().naranja,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50.0),
         )

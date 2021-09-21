@@ -10,15 +10,6 @@ class PerfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      centerTitle: true,
-      title: Text('Perfil de usuario', style: TextStyle(color: Colors.white),), 
-      backgroundColor: Colors.black, 
-      iconTheme: IconThemeData(color: Colors.white),
-      actions: [
-        IconButton(onPressed: (){}, icon: Icon(Icons.edit))
-      ],
-    ),
       body: SafeArea(
         child: FutureBuilder(
           future: usuarioService.cargarPerfil(),
@@ -26,7 +17,6 @@ class PerfilScreen extends StatelessWidget {
             if (snapshot.hasData) {
               return ListView(
                 children: [
-                  SizedBox(height: 10,),
                   _FotoPerfil(foto: snapshot.data!.foto),
                   SizedBox(height: 10,),
                   _Datos(perfil: snapshot.data!,)
@@ -49,18 +39,45 @@ class _FotoPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Center(
-      child: Container(
-        width: size.width*0.43,
-        height: size.width*0.43,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(500),
-          border: Border.all(width: 5, color: Colors.grey),
-          image: DecorationImage(image: NetworkImage('${constantes.dominio}/uploads/fotoPerfil/$foto'),fit: BoxFit.cover)
-        ),
-        
+    return Container(
+      height: size.width*0.35,
+      child: Row(
+        children: [
+          Container(
+            width: size.width*0.25,
+            height: size.width*0.35,
+            decoration: BoxDecoration(
+              color: colores.naranjaClaro,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30))
+            ),
+            child: Center(child: Image(image: AssetImage('assets/icons/mapaNaranja.png'),width: size.width*0.2,)),
+          ),
+          Expanded(
+            child: Container(
+              child: (this.foto=='sin foto') ? Image(image: AssetImage('assets/icons/logonegro.png'), height: size.width*0.3,) : Image(image: NetworkImage('${constantes.dominio}/uploads/fotoPerfil/$foto'), fit: BoxFit.cover,),
+            ),
+          )
+        ],
       ),
     );
+    // return Center(
+    //   child: Container(
+    //     width: size.width*0.43,
+    //     height: size.width*0.43,
+    //     decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(500),
+    //       border: Border.all(width: 5, color: Colors.grey),
+    //       // image: DecorationImage(
+    //       //   image: (this.foto == 'sin foto')? ('assets/icons/logonegro.png') : NetworkImage('${constantes.dominio}/uploads/fotoPerfil/$foto'),
+    //       //   fit: BoxFit.cover
+    //       // )
+    //     ),
+    //     child: Center(
+    //       child: (this.foto=='sin foto') ? Image(image: AssetImage('assets/icons/logonegro.png')) : Image(image: NetworkImage('${constantes.dominio}/uploads/fotoPerfil/$foto'))
+    //     ),
+        
+    //   ),
+    // );
   }
 }
 

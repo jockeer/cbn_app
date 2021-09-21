@@ -14,7 +14,7 @@ class CuponSeleccionadoScreen extends StatelessWidget {
           children: [
             _Titulo(categoria: cupon["Categorium"]["nombre"], nombre: cupon["nombre"],),
             _Foto(foto: cupon["foto"],),
-            _BotonSeleccionar(cupon: cupon,)
+            _BotonSeleccionado(cupon: cupon,)
           ],
         ),
       ),
@@ -22,11 +22,12 @@ class CuponSeleccionadoScreen extends StatelessWidget {
   }
 }
 
-class _BotonSeleccionar extends StatelessWidget {
+class _BotonSeleccionado extends StatelessWidget {
 
   final dynamic cupon;
+  final estilos = EstilosApp();
 
-  _BotonSeleccionar({ required this.cupon });
+  _BotonSeleccionado({ required this.cupon });
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +43,14 @@ class _BotonSeleccionar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
   
-          Text('${cupon["cantidad"]} Cupones disponibles'),
+          Text('${cupon["cantidad"]} Cupones disponibles', style: TextStyle( fontWeight: FontWeight.bold ),),
               
           ElevatedButton(
             onPressed: (){
 
             },
             child: Text('Obtener cupon'),
+            style: estilos.buttonStyle(oscuro: true),
           )
         ],
       ),

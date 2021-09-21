@@ -91,7 +91,7 @@ class _BotonValidacion extends StatelessWidget {
         final intenet = await comprobarInternet();
         if (!intenet) return mostrarSnackBar(context: context, mensaje: 'Revise su conexion a internet y vuelva a intentarlo');
         loading(titulo: 'Validando', context: context);
-        final resp = await pruebaService.obtenerUsuarios(legajo: provider.legajo, ci: provider.ci);
+        final resp = await pruebaService.validarUsuario(legajo: provider.legajo, ci: provider.ci);
         Navigator.pop(context);
         if (resp == null) return mostrarSnackBar(context: context, mensaje: 'Datos incorrectos');
         if (resp == 0) return mostrarSnackBar(context: context, mensaje: 'Ya existe un usuario registrado con esos datos');
