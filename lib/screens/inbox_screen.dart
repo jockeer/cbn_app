@@ -1,4 +1,4 @@
-import 'package:cbn/widgets/appbar.dart';
+
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +11,25 @@ class InboxScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [ 
               Header(titulo: 'Inbox', logo: 'inbo.png',),
               SizedBox(height: 20,),
-              Card(
+              Container(
+                width: size.width*0.92,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ]
+                ),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -31,14 +46,27 @@ class InboxScreen extends StatelessWidget {
                      
                     ),
                     Container(
-                      color: Colors.grey,
                       width: size.width*0.3,
                       height: size.width*0.3,
                     )
                   ],
                 ),
               ),
-              Card(
+              Container(
+                width: size.width*0.92,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ]
+                ),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -55,14 +83,27 @@ class InboxScreen extends StatelessWidget {
                      
                     ),
                     Container(
-                      color: Colors.grey,
                       width: size.width*0.3,
                       height: size.width*0.3,
                     )
                   ],
                 ),
               ),
-              Card(
+              Container(
+                width: size.width*0.92,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ]
+                ),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -79,14 +120,27 @@ class InboxScreen extends StatelessWidget {
                      
                     ),
                     Container(
-                      color: Colors.grey,
                       width: size.width*0.3,
                       height: size.width*0.3,
                     )
                   ],
                 ),
               ),
-              Card(
+              Container(
+                width: size.width*0.92,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 2,
+                      offset: Offset(0, 0), // changes position of shadow
+                    ),
+                  ]
+                ),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Row(
                   children: [
                     Expanded(
@@ -103,7 +157,6 @@ class InboxScreen extends StatelessWidget {
                      
                     ),
                     Container(
-                      color: Colors.grey,
                       width: size.width*0.3,
                       height: size.width*0.3,
                     )

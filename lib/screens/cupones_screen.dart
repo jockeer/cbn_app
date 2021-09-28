@@ -1,7 +1,7 @@
 import 'package:cbn/services/cuponesService.dart';
 import 'package:cbn/services/tiendaService.dart';
 import 'package:cbn/utils/constantes.dart';
-import 'package:cbn/widgets/widgets.dart';
+import 'package:cbn/widgets/header.dart';
 import 'package:flutter/material.dart';
 
 class CuponesScreen extends StatelessWidget {
@@ -9,11 +9,11 @@ class CuponesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Cuponera de descuentos'),
       body: DefaultTabController(
         length: 3,
         child: Column(
           children: [
+            Header(titulo: 'Cupones',logo: 'beneficios.png',),
             TabBar(
               labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               labelColor: Colors.black,

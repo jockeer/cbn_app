@@ -39,7 +39,7 @@ class Sucursales{
                   Expanded(child: Container()),
                   
                   ElevatedButton(
-                      style: estilos.buttonStyle(oscuro: true, largo: true),
+                      style: estilos.buttonStyle(largo: true),
                       child: estilos.buttonChild(texto: 'Cupones'),
                       onPressed: () => Navigator.pop(context),
                   ),

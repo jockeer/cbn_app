@@ -69,7 +69,8 @@ class _MenuItem extends StatelessWidget {
         children: [
           Image(image: AssetImage('assets/icons/$img'), width: 25,),
           SizedBox(height: 5,),
-          Text(this.texto, style: TextStyle(color: (provider.index == this.index)? colores.naranja : Colors.white) ,)
+          Text(this.texto, style: TextStyle(color: (provider.index == this.index)? colores.naranja : (provider.index > 6 && this.texto == 'Beneficios') ?colores.naranja :Colors.white) ,)
+          // Text(this.texto, style: TextStyle(color: (provider.index == this.index)? colores.naranja : Colors.white) ,)
         ],
       ),
     );

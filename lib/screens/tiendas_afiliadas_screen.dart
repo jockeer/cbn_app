@@ -24,22 +24,28 @@ class _TiendasAfiliadasScreenState extends State<TiendasAfiliadasScreen> {
   Widget build(BuildContext context) {
     final sucursalService = SucursalService();
     return Scaffold(
-      appBar: appBarWidget(titulo: 'Tiendas Afiliadas'),
-      body: FutureBuilder(
-        future: sucursalService.cargarSucursales(context),
-        builder: ( _ , AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
+      body: Column(
+        children: [
+          Header(titulo: 'Tiendas afilidas', logo: 'beneficios.png',),
+          Expanded(
+            child: FutureBuilder(
+              future: sucursalService.cargarSucursales(context),
+              builder: ( _ , AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: _kGooglePlex,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+                    markers: snapshot.data,
+                  );
+                }
+                return Center(child: CircularProgressIndicator(),);
               },
-              markers: snapshot.data,
-            );
-          }
-          return Center(child: CircularProgressIndicator(),);
-        },
+            ),
+          ),
+        ],
       ) 
       
       

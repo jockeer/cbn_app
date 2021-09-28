@@ -3,11 +3,13 @@
 import 'package:cbn/providers/login_provider.dart';
 import 'package:cbn/screens/beneficios.dart';
 import 'package:cbn/screens/calculadora_screen.dart';
+import 'package:cbn/screens/cupones_screen.dart';
 import 'package:cbn/screens/gestion_screen.dart';
 import 'package:cbn/screens/glosario_screen.dart';
 import 'package:cbn/screens/inbox_screen.dart';
 import 'package:cbn/screens/informa_screen.dart';
 import 'package:cbn/screens/perfil_screen.dart';
+import 'package:cbn/screens/tiendas_afiliadas_screen.dart';
 // import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +57,13 @@ class _PaginaActiva extends StatelessWidget {
                 ? GestionScreen()
                 : provider.index == 5
                   ? InboxScreen()
-                  : CalculadoraScreen()
+                  : provider.index==6
+                    ?CalculadoraScreen()
+                    : provider.index ==7
+                      ? TiendasAfiliadasScreen()
+                      : provider.index == 8 
+                        ? CuponesScreen()
+                        : Center(child: Text('hola') )
       ),
     );
   }

@@ -1,6 +1,8 @@
 
+import 'package:cbn/providers/login_provider.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CuponGiftcardScreen extends StatelessWidget {
 
@@ -29,15 +31,15 @@ class _Menu extends StatelessWidget {
         children: [
           
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Tiendas Afiliadas', ruta: 'tiendas_afiliadas', img: 'map.png',),
+          _MenuItem(titulo: 'Tiendas Afiliadas', ruta: 'tiendas_afiliadas', img: 'map.png', index: 7,),
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Cupones de descuentos', ruta: 'cupones', img: 'cupon.png',),
+          _MenuItem(titulo: 'Cupones de descuentos', ruta: 'cupones', img: 'cupon.png', index: 8,),
          
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Tu Gift Card', ruta: 'tu_gift_card', img: 'gifcard.png',),
+          _MenuItem(titulo: 'Tu Gift Card', ruta: 'tu_gift_card', img: 'gifcard.png', index: 9,),
          
           SizedBox(height: 20,),
-          _MenuItem(titulo: 'Beneficios internos', ruta: 'recarga_gift_card', img: 'gift.png',),
+          _MenuItem(titulo: 'Beneficios internos', ruta: 'recarga_gift_card', img: 'gift.png', index: 10,),
           
           SizedBox(height: 20,),
         ],
@@ -48,15 +50,17 @@ class _Menu extends StatelessWidget {
 
 class _MenuItem extends StatelessWidget {
   final String titulo, ruta, img;
+  final int index;
 
-  _MenuItem({ required this.titulo, required this.ruta, required this.img });
+  _MenuItem({ required this.titulo, required this.ruta, required this.img, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LoginProvider>(context);
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, this.ruta);
+        provider.index=this.index;
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(35),
