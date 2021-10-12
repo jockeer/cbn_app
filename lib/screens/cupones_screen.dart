@@ -211,7 +211,7 @@ class _Tiendas extends StatelessWidget {
               ),
               itemCount: snapshot.data.length,
               itemBuilder: ( BuildContext context , int index ){
-                return _Tienda(titulo: snapshot.data[index]["name"], cupones: snapshot.data[index]["cupones"].toString(), logo: snapshot.data[index]["logo"],);
+                return _Tienda(titulo: snapshot.data[index].name, cupones: snapshot.data[index].cupones.toString(), logo: snapshot.data[index].logo,);
               },
             );
           }

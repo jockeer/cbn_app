@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cbn/models/tienda.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
@@ -17,10 +18,10 @@ class TiendaService {
           "x-token": prefs.token
         }
       );
-
       final decoded = await jsonDecode(respuesta.body);
       if (!decoded["ok"]) return null;
-      
-      return decoded["tiendas"];
+      final tiendas = Tiendas.fromJsonList(decoded["tiendas"]);
+      print(tiendas);
+      return tiendas.items;
     }
 }

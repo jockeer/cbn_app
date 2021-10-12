@@ -20,6 +20,7 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   final colores = ColoresApp();
+  final prefs = PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +40,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'welcome',
+        initialRoute: (prefs.token == '')
+            ? 'welcome'
+            : 'home',
         routes:getRoutes(),
         theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(
-            brightness: Brightness.dark,
+            systemOverlayStyle: SystemUiOverlayStyle.light,
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
             elevation: 0,

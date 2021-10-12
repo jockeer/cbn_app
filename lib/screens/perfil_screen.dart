@@ -10,23 +10,43 @@ class PerfilScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder(
-          future: usuarioService.cargarPerfil(),
-          builder: ( _ , AsyncSnapshot<PerfilModel> snapshot){
-            if (snapshot.hasData) {
-              return ListView(
-                children: [
-                  _FotoPerfil(foto: snapshot.data!.foto),
-                  SizedBox(height: 10,),
-                  _Datos(perfil: snapshot.data!,)
-                ],
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
+      body: FutureBuilder(
+        future: usuarioService.cargarPerfil(context),
+        builder: (_,  AsyncSnapshot<PerfilModel?> snapshot){
+          if (snapshot.hasData) {
+            return Column(
+              children: [
+                _FotoPerfil(foto: snapshot.data!.foto),
+                Expanded(child: _NuestrosDatos(perfil: snapshot.data!))
+              ],
+            );
+          }
+          return Center(child: CircularProgressIndicator(),);
+        },
       ),
+      // body: SafeArea(
+      //   child: Container(
+      //     width: size.width,
+      //     height: size.height,
+      //     child: FutureBuilder(
+      //       future: usuarioService.cargarPerfil(),
+      //       builder: ( _ , AsyncSnapshot<PerfilModel> snapshot){
+      //         if (snapshot.hasData) {
+      //           return Column(
+      //             children: [
+      //               _FotoPerfil(foto: snapshot.data!.foto),
+      //               _NuestrosDatos(perfil:  snapshot.data!)
+      //               // SizedBox(height: 10,),
+      //               // _NuestrosDatos(perfil: snapshot.data!,),
+      //               // _Datos(perfil: snapshot.data!,)
+      //             ],
+      //           );
+      //         }
+      //         return Center(child: CircularProgressIndicator());
+      //       },
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
@@ -81,6 +101,73 @@ class _FotoPerfil extends StatelessWidget {
   }
 }
 
+class _NuestrosDatos extends StatelessWidget {
+  final colores = ColoresApp();
+  final PerfilModel perfil;
+
+  _NuestrosDatos({ required this.perfil });
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 15,
+          ),
+          TabBar(
+            isScrollable: false,
+            indicatorColor: colores.naranja,
+            indicatorWeight: 3.0,
+            labelColor: Colors.black,
+            tabs: [
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(width: 5,),
+                    Text(
+                      'Datos Personales',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.width * 0.033),
+                    ),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.person_pin_sharp),
+                    SizedBox(width: 5,),
+                    Text(
+                      'Datos de Usuario',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: size.width * 0.033),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _Datos(perfil: perfil),
+                Center(child: Text('ss'),)
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class _Datos extends StatelessWidget {
 
   final PerfilModel perfil;
@@ -92,7 +179,8 @@ class _Datos extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
+      
+      child: ListView(
         children: [
           _Dato(titulo: 'Nombre', texto: this.perfil.name!,),
           Divider(thickness: 2, height: 0,),  
@@ -118,11 +206,11 @@ class _Datos extends StatelessWidget {
           Divider(thickness: 2, height: 0,),  
           _Dato(titulo: 'Talla', texto: this.perfil.height!,),
           Divider(thickness: 2, height: 0,),  
-          _Dato(titulo: 'Busto', texto: this.perfil.bustSize!,),
-          Divider(thickness: 2, height: 0,),  
-          _Dato(titulo: 'Cintura', texto: this.perfil.waistSize!,),
-          Divider(thickness: 2, height: 0,),  
-          _Dato(titulo: 'Pie', texto: this.perfil.footSize!,),
+          // _Dato(titulo: 'Polera', texto: this.perfil.bustSize!,),
+          // Divider(thickness: 2, height: 0,),  
+          // _Dato(titulo: 'Pantalon', texto: this.perfil.waistSize!,),
+          // Divider(thickness: 2, height: 0,),  
+          // _Dato(titulo: 'Zapato', texto: this.perfil.footSize!,),
           Divider(thickness: 2, height: 0,),  
           SizedBox(height: 20,)
           

@@ -5,6 +5,7 @@ import 'package:cbn/models/customer.dart';
 import 'package:cbn/models/perfil.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioService {
@@ -121,15 +122,22 @@ class UsuarioService {
 
   }
 
-  Future<PerfilModel> cargarPerfil() async {
+  Future<PerfilModel?> cargarPerfil(BuildContext context) async {
     final url = Uri.parse('${constantes.dominio}/api/customer/perfil');
     final resp = await http.get(url,headers: {
       'x-token': prefs.token
     });
 
     final respDecoded = await jsonDecode(resp.body);
+
+    if (respDecoded.containsKey("error")) {
+      prefs.token = '';
+      return Navigator.pushReplacementNamed(context, 'welcome');
+      
+    } else {
+      final perfil = PerfilModel.fromJson(respDecoded["perfil"]);
+      return perfil;
+    }
     
-    final perfil = PerfilModel.fromJson(respDecoded["perfil"]);
-    return perfil;
   }
 }

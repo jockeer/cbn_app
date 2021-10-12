@@ -1,3 +1,4 @@
+import 'package:cbn/search/glosario_search.dart';
 import 'package:cbn/services/infoService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
@@ -17,6 +18,10 @@ class GlosarioScreen extends StatelessWidget {
             Column(
                 children: [
                   _Encabezado(),
+                  IconButton(
+                    onPressed: ()=> showSearch(context: context, delegate: GlosarioSearchDelegate()), 
+                    icon: Icon(Icons.search)
+                  ),
                   _Glosarios(),
                 ],
               ),
