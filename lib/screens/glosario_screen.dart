@@ -1,78 +1,110 @@
+import 'package:cbn/providers/providers.dart';
 import 'package:cbn/search/glosario_search.dart';
 import 'package:cbn/services/infoService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GlosarioScreen extends StatelessWidget {
-
   final infoService = InfoService();
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<GlosarioProvider>(context);
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            FondoPantalla(img: 'fondoWhite.png'),
-            Column(
+        body: FutureBuilder(
+      future: infoService.obtenerGlosario(),
+      builder: (_, AsyncSnapshot<List> snapshot) {
+        if (snapshot.hasData) {
+          // provider.glosarios = snapshot.data;
+          return Stack(
+            children: [
+              FondoPantalla(img: 'fondoWhite.png'),
+              Column(
                 children: [
                   _Encabezado(),
-                  IconButton(
-                    onPressed: ()=> showSearch(context: context, delegate: GlosarioSearchDelegate()), 
-                    icon: Icon(Icons.search)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 50),
+                    child: TextFormField(
+                      decoration:
+                          InputDecoration(suffixIcon: Icon(Icons.search)),
+                      onChanged: (value) {
+                        if (value.isEmpty) {
+                          provider.busqueda = false;
+                          provider.glosarios = [];
+                        } else {
+                          provider.busqueda = true;
+                          var nuevaLista = snapshot.data!.where((item) {
+                            return item["acronimo"].toString().contains(value);
+                          }).toList();
+                          provider.glosarios = nuevaLista;
+                        }
+                        // provider.glosarios = snapshot.data;
+                        // print(provider.glosarios);
+                      },
+                    ),
                   ),
-                  _Glosarios(),
+                  _Glosarios(
+                    datos: (provider.busqueda)
+                        ? provider.glosarios
+                        : snapshot.data,
+                  )
                 ],
-              ),
-
-          ],
-        ),
-        
-      ),
-    );
+              )
+            ],
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    ));
   }
 }
 
 class _Glosarios extends StatelessWidget {
   final infoService = InfoService();
+  final dynamic datos;
+
+  _Glosarios({required this.datos});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Expanded(
-      child: FutureBuilder(
-          future: infoService.obtenerGlosario(),
-          builder: ( _ , AsyncSnapshot snapshot){
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: ( _, index){
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child:Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container( alignment: Alignment.center ,width: size.width * 0.2 ,child: Text(snapshot.data[index]["acronimo"], style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14 ),)),
-                          Text(snapshot.data[index]["definicion"], style: TextStyle( fontSize: 14 ),),
-                        ],
-                      )
+      child: ListView.builder(
+        itemCount: datos.length,
+        itemBuilder: (_, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        alignment: Alignment.center,
+                        width: size.width * 0.2,
+                        child: Text(
+                          datos[index]["acronimo"],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        )),
+                    Text(
+                      datos[index]["definicion"],
+                      style: TextStyle(fontSize: 14),
                     ),
-                  );
-                },
-              );
-            }
-            return Center(child: CircularProgressIndicator(),);
-          },
-        ),
+                  ],
+                )),
+          );
+        },
+      ),
     );
   }
 }
 
 class _Encabezado extends StatelessWidget {
-
   final colores = ColoresApp();
   @override
   Widget build(BuildContext context) {
@@ -86,9 +118,21 @@ class _Encabezado extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Text('Acronimo', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white ) ,),
+            Text(
+              'Acrónimo',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.white),
+            ),
             Expanded(child: Container()),
-            Text('Definicion', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white ) ,),
+            Text(
+              'Definición',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.white),
+            ),
             Expanded(child: Container()),
           ],
         ),

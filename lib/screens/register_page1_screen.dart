@@ -8,16 +8,17 @@ import 'package:cbn/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage1Screen extends StatelessWidget {
-
   final formState = GlobalKey<FormState>();
-  
+
   @override
   Widget build(BuildContext context) {
-    final CustomerModel customer = ModalRoute.of(context)!.settings.arguments as CustomerModel;
+    final CustomerModel customer =
+        ModalRoute.of(context)!.settings.arguments as CustomerModel;
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) return  FocusManager.instance.primaryFocus!.unfocus();
+        if (!focus.hasPrimaryFocus && focus.hasFocus)
+          return FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -29,11 +30,13 @@ class RegisterPage1Screen extends StatelessWidget {
                 child: Column(
                   children: [
                     TopLogoWidget(),
-                    _Formulario(formState: formState, customer: customer,),
+                    _Formulario(
+                      formState: formState,
+                      customer: customer,
+                    ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -57,19 +60,51 @@ class _Formulario extends StatelessWidget {
         key: formState,
         child: Column(
           children: [
-            estilos.inputLabel(label: 'Nombre(s)', obligatorio: true,),
-            _FirstName(customer: this.customer,),
-            estilos.inputLabel(label: 'Apellido(s)', obligatorio: true,),
-            _LastName(customer: this.customer,),
-            estilos.inputLabel(label: 'Correo electrónico', obligatorio: true,),
-            _Email(customer: this.customer,),
-            estilos.inputLabel(label: 'Legajo', obligatorio: true,),
-            _Legajo(customer: this.customer,),
-            estilos.inputLabel(label: 'Carnet de identidad', obligatorio: true,),
-            _Carnet(customer: this.customer,),
-            SizedBox(height: 50,),
-            _NextButton(formState: this.formState, customer: this.customer,),
-            SizedBox(height: 50,),
+            estilos.inputLabel(
+              label: 'Nombre(s)',
+              obligatorio: true,
+            ),
+            _FirstName(
+              customer: this.customer,
+            ),
+            estilos.inputLabel(
+              label: 'Apellido(s)',
+              obligatorio: true,
+            ),
+            _LastName(
+              customer: this.customer,
+            ),
+            estilos.inputLabel(
+              label: 'Correo electrónico',
+              obligatorio: true,
+            ),
+            _Email(
+              customer: this.customer,
+            ),
+            estilos.inputLabel(
+              label: 'Legajo',
+              obligatorio: true,
+            ),
+            _Legajo(
+              customer: this.customer,
+            ),
+            estilos.inputLabel(
+              label: 'Carnet de Identidad',
+              obligatorio: true,
+            ),
+            _Carnet(
+              customer: this.customer,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            _NextButton(
+              formState: this.formState,
+              customer: this.customer,
+            ),
+            SizedBox(
+              height: 50,
+            ),
           ],
         ),
       ),
@@ -79,14 +114,14 @@ class _Formulario extends StatelessWidget {
 
 class _FirstName extends StatelessWidget {
   final CustomerModel customer;
-  _FirstName({ required this.customer });
+  _FirstName({required this.customer});
   @override
   Widget build(BuildContext context) {
     final estilos = EstilosApp();
     return TextFormField(
       decoration: estilos.inputDecoration(hintText: 'Nombre'),
       initialValue: this.customer.name,
-      validator: (value){
+      validator: (value) {
         this.customer.name = value;
         if (value!.isEmpty) return 'El nombre es obligatorio';
         return null;
@@ -96,9 +131,8 @@ class _FirstName extends StatelessWidget {
 }
 
 class _LastName extends StatelessWidget {
-
   final CustomerModel customer;
-  _LastName({ required this.customer });
+  _LastName({required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +140,8 @@ class _LastName extends StatelessWidget {
     return TextFormField(
       decoration: estilos.inputDecoration(hintText: 'Apellido'),
       initialValue: this.customer.lastname,
-      validator: (value){
-         this.customer.lastname = value;
+      validator: (value) {
+        this.customer.lastname = value;
         if (value!.isEmpty) return 'El apellido es obligatorio';
         return null;
       },
@@ -116,9 +150,8 @@ class _LastName extends StatelessWidget {
 }
 
 class _Legajo extends StatelessWidget {
-
   final CustomerModel customer;
-  _Legajo({ required this.customer });
+  _Legajo({required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -127,16 +160,17 @@ class _Legajo extends StatelessWidget {
       initialValue: this.customer.legajo,
       readOnly: true,
       decoration: estilos.inputDecoration(hintText: 'Legajo'),
-      validator: (value){
+      validator: (value) {
         if (value!.isEmpty) return 'El legajo es obligatorio';
         return null;
       },
     );
   }
 }
+
 class _Carnet extends StatelessWidget {
   final CustomerModel customer;
-  _Carnet({ required this.customer });
+  _Carnet({required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +179,7 @@ class _Carnet extends StatelessWidget {
       initialValue: this.customer.ci,
       readOnly: true,
       decoration: estilos.inputDecoration(hintText: 'Carnet de identidad'),
-      validator: (value){
+      validator: (value) {
         if (value!.isEmpty) return 'El carnet es obligatorio';
         return null;
       },
@@ -155,10 +189,10 @@ class _Carnet extends StatelessWidget {
 
 class _Email extends StatelessWidget {
   final CustomerModel customer;
-  _Email({ required this.customer });
+  _Email({required this.customer});
 
   final validator = FormValidator();
-  
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<RegistroProvider>(context);
@@ -166,7 +200,7 @@ class _Email extends StatelessWidget {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
       decoration: estilos.inputDecoration(hintText: 'Correo electrónico'),
-      validator: (value){
+      validator: (value) {
         this.customer.email = value;
         provider.email = value.toString();
         if (value!.isEmpty) return 'El email es obligatorio';
@@ -178,7 +212,6 @@ class _Email extends StatelessWidget {
 }
 
 class _NextButton extends StatelessWidget {
-
   final GlobalKey<FormState> formState;
   final CustomerModel customer;
 
@@ -190,9 +223,10 @@ class _NextButton extends StatelessWidget {
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Siguiente'),
-      onPressed: (){
+      onPressed: () {
         if (!this.formState.currentState!.validate()) return;
-        Navigator.pushNamed(context, 'register_page2', arguments: this.customer);
+        Navigator.pushNamed(context, 'register_page2',
+            arguments: this.customer);
       },
     );
   }

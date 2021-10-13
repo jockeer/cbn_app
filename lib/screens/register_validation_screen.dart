@@ -15,9 +15,10 @@ class RegisterValidationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) return  FocusManager.instance.primaryFocus!.unfocus();
+        if (!focus.hasPrimaryFocus && focus.hasFocus)
+          return FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -29,7 +30,9 @@ class RegisterValidationScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TopLogoWidget(),
-                    SizedBox(height: 50,),
+                    SizedBox(
+                      height: 50,
+                    ),
                     _Formulario(formState: formState),
                   ],
                 ),
@@ -43,15 +46,12 @@ class RegisterValidationScreen extends StatelessWidget {
 }
 
 class _Formulario extends StatelessWidget {
-
   final GlobalKey<FormState> formState;
   final estilos = EstilosApp();
-  _Formulario({ required this.formState });
-
+  _Formulario({required this.formState});
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
@@ -62,8 +62,12 @@ class _Formulario extends StatelessWidget {
             _Legajo(),
             estilos.inputLabel(label: 'Carnet de Identidad', obligatorio: true),
             _Carnet(),
-            SizedBox(height: 20,),
-            _BotonValidacion(formState: this.formState,),
+            SizedBox(
+              height: 20,
+            ),
+            _BotonValidacion(
+              formState: this.formState,
+            ),
           ],
         ),
       ),
@@ -72,11 +76,10 @@ class _Formulario extends StatelessWidget {
 }
 
 class _BotonValidacion extends StatelessWidget {
-  
   final GlobalKey<FormState> formState;
   final pruebaService = UsuarioService();
 
-  _BotonValidacion({ required this.formState });
+  _BotonValidacion({required this.formState});
 
   final estilos = EstilosApp();
 
@@ -89,29 +92,37 @@ class _BotonValidacion extends StatelessWidget {
       onPressed: () async {
         if (!this.formState.currentState!.validate()) return;
         final intenet = await comprobarInternet();
-        if (!intenet) return mostrarSnackBar(context: context, mensaje: 'Revise su conexion a internet y vuelva a intentarlo');
+        if (!intenet)
+          return mostrarSnackBar(
+              context: context,
+              mensaje: 'Revise su conexion a internet y vuelva a intentarlo');
         loading(titulo: 'Validando', context: context);
-        final resp = await pruebaService.validarUsuario(legajo: provider.legajo, ci: provider.ci);
+        final resp = await pruebaService.validarUsuario(
+            legajo: provider.legajo, ci: provider.ci);
         Navigator.pop(context);
-        if (resp == null) return mostrarSnackBar(context: context, mensaje: 'Datos incorrectos');
-        if (resp == 0) return mostrarSnackBar(context: context, mensaje: 'Ya existe un usuario registrado con esos datos');
+        if (resp == null)
+          return mostrarSnackBar(
+              context: context, mensaje: 'Datos incorrectos');
+        if (resp == 0)
+          return mostrarSnackBar(
+              context: context,
+              mensaje: 'Ya existe un usuario registrado con esos datos');
         Navigator.pushNamed(context, 'register_page1', arguments: resp);
-      }, 
+      },
     );
   }
 }
 
 class _Carnet extends StatelessWidget {
-  
   final estilos = EstilosApp();
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
-      obscureText:true,
-      decoration: estilos.inputDecoration(hintText: 'Carnet de identidad'),
-      validator: (value){
+      obscureText: true,
+      decoration: estilos.inputDecoration(hintText: 'Carnet de Identidad'),
+      validator: (value) {
         provider.ci = value.toString();
         if (value!.isEmpty) return 'El Carnet es obligatorio';
       },
@@ -120,7 +131,6 @@ class _Carnet extends StatelessWidget {
 }
 
 class _Legajo extends StatelessWidget {
-
   final estilos = EstilosApp();
 
   @override
@@ -128,8 +138,8 @@ class _Legajo extends StatelessWidget {
     final provider = Provider.of<RegistroProvider>(context);
     return TextFormField(
       decoration: estilos.inputDecoration(hintText: 'Legajo'),
-      validator: (value){
-        provider.legajo=value.toString();
+      validator: (value) {
+        provider.legajo = value.toString();
         if (value!.isEmpty) return 'El legajo es obligatorio';
       },
     );
