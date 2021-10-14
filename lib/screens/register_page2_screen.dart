@@ -1,5 +1,7 @@
 import 'package:cbn/models/customer.dart';
+import 'package:cbn/models/region.dart';
 import 'package:cbn/providers/providers.dart';
+import 'package:cbn/services/regionService.dart';
 import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/carga.dart';
@@ -60,6 +62,9 @@ class _Info extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
+          SizedBox(
+            height: 20,
+          ),
           Text(
             'INGRESA INFORMACIÓN ADICIONAL',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -99,6 +104,8 @@ class _Formulario extends StatelessWidget {
             _Cellphone(
               customer: this.customer,
             ),
+            estilos.inputLabel(label: 'Región', obligatorio: true),
+            _Regiones(customer: this.customer),
             estilos.inputLabel(label: 'Interno'),
             _Interno(
               customer: this.customer,
@@ -115,6 +122,59 @@ class _Formulario extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _Regiones extends StatelessWidget {
+  final regionService = RegionService();
+  final CustomerModel customer;
+
+  _Regiones({required this.customer});
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<RegistroProvider>(context);
+    return FutureBuilder(
+      future: regionService.obtenerRegiones(),
+      builder: (_, AsyncSnapshot<List<Region>> snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(500.0),
+                border: Border.all(color: Colors.black26)),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: DropdownButton(
+                underline: Container(
+                  height: 0.0,
+                ),
+                dropdownColor: Colors.white,
+                icon: Icon(Icons.arrow_circle_down_outlined),
+                isExpanded: true,
+                value: provider.region,
+                items: snapshot.data!.map((cabana) {
+                  return DropdownMenuItem(
+                    child: Text(
+                      cabana.name.toString(),
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    value: cabana.id,
+                  );
+                }).toList(),
+                onChanged: (opt) {
+                  provider.region = opt;
+                  this.customer.idRegion = opt.toString();
+                },
+              ),
+            ),
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

@@ -36,7 +36,10 @@ class GestionScreen extends StatelessWidget {
                             snapshot.data[index]["cargo"],
                           ),
                           subtitle: Text(snapshot.data[index]["nombre"]),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, 'organigrama',
+                                arguments: snapshot.data[index]);
+                          },
                         ),
                         Divider()
                       ],
