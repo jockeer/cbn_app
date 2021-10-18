@@ -1,9 +1,11 @@
 import 'package:cbn/services/inboxService.dart';
+import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InboxScreen extends StatelessWidget {
   final inboxservice = InboxService();
+  final constantes = DatosConstantes();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,7 +35,10 @@ class InboxScreen extends StatelessWidget {
                             children: [
                               ListTile(
                                 trailing: Icon(Icons.arrow_forward_ios),
-                                // leading: Icon(Icons.person),
+                                leading: Image(
+                                  image: NetworkImage(
+                                      '${constantes.dominio}/uploads/inboxIcons/${snapshot.data[index]["logo"]}'),
+                                ),
                                 title: Text(
                                   snapshot.data[index]["categoria"],
                                 ),
