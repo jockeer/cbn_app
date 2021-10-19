@@ -1,4 +1,5 @@
 import 'package:cbn/providers/login_provider.dart';
+import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,47 +114,27 @@ class _Menu extends StatelessWidget {
 
 class _OptionMenu extends StatelessWidget {
   final String titulo, ruta, logo;
-
+  final constantes = DatosConstantes();
   _OptionMenu({required this.titulo, required this.ruta, required this.logo});
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.width * 0.25,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: Offset(0, 0), // changes position of shadow
-            ),
-          ]),
-      margin: EdgeInsets.only(bottom: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
         children: [
-          SizedBox(
-            width: 20,
+          ListTile(
+            trailing: Icon(Icons.arrow_forward_ios),
+            leading: Image(
+              image: AssetImage('assets/icons/$logo'),
+            ),
+            title: Text(
+              this.titulo,
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, this.ruta);
+            },
           ),
-          Text(
-            this.titulo,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: size.width * 0.055),
-          ),
-          Expanded(
-            child: Container(),
-          ),
-          Image(
-            image: AssetImage('assets/icons/$logo'),
-            width: size.width * 0.15,
-          ),
-          SizedBox(
-            width: 20,
-          ),
+          Divider()
         ],
       ),
     );

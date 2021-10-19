@@ -1,3 +1,4 @@
+import 'package:cbn/providers/perfil_provider.dart';
 import 'package:cbn/providers/registro_provider.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/utils/preferencias_usuario.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => GestionProdiver(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PerfilProvider(),
         ),
       ],
       child: MaterialApp(

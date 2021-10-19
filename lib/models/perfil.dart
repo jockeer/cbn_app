@@ -40,7 +40,8 @@ class PerfilModel {
       this.codTributario,
       this.idRegion,
       this.region,
-      this.email});
+      this.email,
+      this.polera});
 
   int? id;
   String? name;
@@ -77,6 +78,8 @@ class PerfilModel {
   String? region;
   String? email;
 
+  String? polera;
+
   factory PerfilModel.fromJson(Map<String, dynamic> json) => PerfilModel(
       id: json["id"],
       name: json["name"],
@@ -111,7 +114,8 @@ class PerfilModel {
       codTributario: json["cod_tributario"],
       idRegion: json["id_region"],
       region: json["Region"]["name"],
-      email: json["User"]["user_email"]);
+      email: json["User"]["user_email"],
+      polera: json["Polera"]["talla"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

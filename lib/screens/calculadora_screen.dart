@@ -36,7 +36,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
         body: SafeArea(
           child: Stack(
             children: [
-              FondoPantalla(img: 'fondoblanco.png'),
+              // FondoPantalla(img: 'fondoblanco.png'),
               SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
@@ -69,6 +69,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                           Container(
                             width: 100,
                             child: TextField(
+                              keyboardType: TextInputType.phone,
                               decoration: estilos.inputDecoration(
                                   hintText: '0', circular: false),
                               onChanged: (value) {

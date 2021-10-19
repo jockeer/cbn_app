@@ -89,6 +89,11 @@ class _Institucional extends StatelessWidget {
       future: infoService.obtenerInformacion(),
       builder: (_, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.length == 0) {
+            return Center(
+              child: Text('No hay datos'),
+            );
+          }
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (_, index) {
@@ -113,6 +118,11 @@ class _Comunicado extends StatelessWidget {
       future: infoService.obtenerInformacionComunicado(),
       builder: (_, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.length == 0) {
+            return Center(
+              child: Text('No hay datos'),
+            );
+          }
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (_, index) {

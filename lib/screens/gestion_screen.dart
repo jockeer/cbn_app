@@ -22,6 +22,11 @@ class GestionScreen extends StatelessWidget {
           future: gestionService.obtenerGestion(),
           builder: (_, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+              if (snapshot.data.length == 0) {
+                return Center(
+                  child: Text('No hay datos'),
+                );
+              }
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (_, index) {
