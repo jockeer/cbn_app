@@ -91,9 +91,13 @@ class _Glosarios extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 14),
                         )),
-                    Text(
-                      datos[index]["definicion"],
-                      style: TextStyle(fontSize: 14),
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          datos[index]["definicion"],
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
                     ),
                   ],
                 )),

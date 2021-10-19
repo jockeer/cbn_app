@@ -107,7 +107,7 @@ class PerfilModel {
       convenio: json["convenio"],
       centroCosto: json["centro_costo"],
       puesto: json["puesto"],
-      idEmpresa: json["id_empresa"],
+      idEmpresa: json["id_empresa"].toString(),
       codTributario: json["cod_tributario"],
       idRegion: json["id_region"],
       region: json["Region"]["name"],
