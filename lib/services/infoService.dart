@@ -8,7 +8,8 @@ class InfoService {
   final datosConstantes = DatosConstantes();
   final prefs = PreferenciasUsuario();
   Future obtenerInformacion() async {
-    final url = Uri.parse('${datosConstantes.dominio}/api/informacion');
+    final url =
+        Uri.parse('${datosConstantes.dominio}/api/informacion/instituconal');
     final resp = await http.get(url, headers: {'x-token': prefs.token});
 
     final respDecoded = await jsonDecode(resp.body);
@@ -16,7 +17,8 @@ class InfoService {
   }
 
   Future obtenerInformacionComunicado() async {
-    final url = Uri.parse('${datosConstantes.dominio}/api/informacion');
+    final url =
+        Uri.parse('${datosConstantes.dominio}/api/informacion/comunicado');
     final resp = await http.get(url, headers: {'x-token': prefs.token});
 
     final respDecoded = await jsonDecode(resp.body);

@@ -136,4 +136,16 @@ class UsuarioService {
       return perfil;
     }
   }
+
+  Future actualizarDatosPerfil(Map<String, dynamic> parametros) async {
+    final url =
+        Uri.parse('${constantes.dominio}/api/customer/actualizarPerfil');
+    final respuesta = await http.put(url,
+        body: jsonEncode(parametros),
+        headers: {'x-token': prefs.token, "Content-Type": "application/json"});
+
+    final respDecoded = await json.decode(respuesta.body);
+    print(respuesta);
+    return respDecoded;
+  }
 }

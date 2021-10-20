@@ -16,4 +16,21 @@ class InboxService {
     final respDecoded = await jsonDecode(resp.body);
     return respDecoded["resp"];
   }
+
+  Future crearSala(int idCategoria) async {
+    final url =
+        Uri.parse('${datosConstantes.dominio}/api/mensajeria/crearSala');
+
+    try {
+      final resp = await http.post(url,
+          body: jsonEncode({"id_categoria": idCategoria}),
+          headers: {
+            'x-token': prefs.token,
+            "Content-Type": "application/json"
+          });
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 }

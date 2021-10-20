@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class PerfilProvider extends ChangeNotifier {
   bool _editPerfil = false;
   int _idpolera = 1;
-  int _idpantalon = 1;
-  int _idzapato = 1;
+  int _idpantalon = 32;
+  int _idzapato = 35;
   String _estadoCivil = 'S';
   late String _telefono;
   late String _interno;

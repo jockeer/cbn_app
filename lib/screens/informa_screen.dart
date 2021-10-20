@@ -123,6 +123,11 @@ class _Comunicado extends StatelessWidget {
               child: Text('No hay datos'),
             );
           }
+          if (snapshot.data[0] == null) {
+            return Center(
+              child: Text('No hay datos'),
+            );
+          }
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (_, index) {

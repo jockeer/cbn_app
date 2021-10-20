@@ -126,6 +126,7 @@ class _OptionMenu extends StatelessWidget {
             trailing: Icon(Icons.arrow_forward_ios),
             leading: Image(
               image: AssetImage('assets/icons/$logo'),
+              width: size.width * 0.11,
             ),
             title: Text(
               this.titulo,

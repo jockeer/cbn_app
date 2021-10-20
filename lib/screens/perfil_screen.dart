@@ -1,7 +1,9 @@
 import 'package:cbn/models/perfil.dart';
 import 'package:cbn/providers/perfil_provider.dart';
 import 'package:cbn/services/usuarioService.dart';
+import 'package:cbn/utils/carga.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +50,7 @@ class PerfilScreen extends StatelessWidget {
 class _FotoPerfil extends StatelessWidget {
   final colores = ColoresApp();
   final foto;
+  final usuarioService = UsuarioService();
   final constantes = DatosConstantes();
   final GlobalKey<FormState> formStateButto;
   _FotoPerfil({required this.foto, required this.formStateButto});
@@ -104,10 +107,27 @@ class _FotoPerfil extends StatelessWidget {
                   color: colores.naranja,
                 ),
               ),
+              (provider.editPerfil)
+                  ? Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: IconButton(
+                        onPressed: () {
+                          provider.editPerfil = false;
+                        },
+                        icon: Icon(
+                          Icons.cancel_outlined,
+                          size: 30,
+                        ),
+                        color: colores.naranja,
+                      ),
+                    )
+                  : Container(),
               (!provider.editPerfil)
                   ? Positioned(
-                      top: 40,
+                      top: 0,
                       right: 0,
+                      bottom: 0,
                       child: IconButton(
                         onPressed: () {
                           provider.editPerfil = true;
@@ -123,16 +143,40 @@ class _FotoPerfil extends StatelessWidget {
                       top: 40,
                       right: 0,
                       child: IconButton(
-                        onPressed: () {
+                        onPressed: () async {
                           //provider.editPerfil = false;
                           if (!this.formStateButto.currentState!.validate())
                             return;
-                          print(provider.telefono);
-                          print(provider.interno);
-                          print(provider.correo);
-                          print(provider.direccion);
-                          print(provider.estatura);
-                          print(provider.estadoCivil);
+                          final parametros = {
+                            "cellphone": provider.telefono,
+                            "internal": provider.interno,
+                            "user_email": provider.correo,
+                            "height": provider.estatura,
+                            "marital_status": provider.estadoCivil,
+                            "id_polera": provider.idpolera,
+                            "pantalon": provider.idpantalon,
+                            "zapato": provider.idzapato,
+                            "address": provider.direccion
+                          };
+                          loading(
+                              titulo: 'actualizando Perfil', context: context);
+                          final resp = await usuarioService
+                              .actualizarDatosPerfil(parametros);
+                          Navigator.pop(context);
+                          if (resp["ok"]) {
+                            mostrarSnackBar(
+                                context: context,
+                                mensaje: 'Perfil actualizado!',
+                                color: Colors.green);
+                          } else {
+                            mostrarSnackBar(
+                                context: context,
+                                mensaje: 'Error al actualizar');
+                          }
+                          print(resp);
+                          provider.editPerfil = false;
+
+                          print(parametros);
                         },
                         icon: Icon(
                           Icons.save,
@@ -359,7 +403,7 @@ class _Datos extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, 'welcome');
               },
-              child: estilos.buttonChild(texto: 'Cerrar sesion'),
+              child: estilos.buttonChild(texto: 'Cerrar sesión'),
               style: estilos.buttonStyle(),
             ),
           ),
@@ -524,79 +568,79 @@ class _PantalonSeleccionable extends StatelessWidget {
                     items: [
                       DropdownMenuItem(
                         child: Text('32'),
-                        value: 1,
+                        value: 32,
                       ),
                       DropdownMenuItem(
                         child: Text('33'),
-                        value: 2,
+                        value: 33,
                       ),
                       DropdownMenuItem(
                         child: Text('34'),
-                        value: 3,
+                        value: 34,
                       ),
                       DropdownMenuItem(
                         child: Text('35'),
-                        value: 4,
+                        value: 35,
                       ),
                       DropdownMenuItem(
                         child: Text('36'),
-                        value: 5,
+                        value: 36,
                       ),
                       DropdownMenuItem(
                         child: Text('37'),
-                        value: 6,
+                        value: 37,
                       ),
                       DropdownMenuItem(
                         child: Text('38'),
-                        value: 7,
+                        value: 38,
                       ),
                       DropdownMenuItem(
                         child: Text('39'),
-                        value: 8,
+                        value: 39,
                       ),
                       DropdownMenuItem(
                         child: Text('40'),
-                        value: 9,
+                        value: 40,
                       ),
                       DropdownMenuItem(
                         child: Text('41'),
-                        value: 10,
+                        value: 41,
                       ),
                       DropdownMenuItem(
                         child: Text('42'),
-                        value: 11,
+                        value: 42,
                       ),
                       DropdownMenuItem(
                         child: Text('43'),
-                        value: 12,
+                        value: 43,
                       ),
                       DropdownMenuItem(
                         child: Text('44'),
-                        value: 13,
+                        value: 44,
                       ),
                       DropdownMenuItem(
                         child: Text('45'),
-                        value: 14,
+                        value: 45,
                       ),
                       DropdownMenuItem(
                         child: Text('46'),
-                        value: 15,
+                        value: 46,
                       ),
                       DropdownMenuItem(
                         child: Text('47'),
-                        value: 16,
+                        value: 47,
                       ),
                       DropdownMenuItem(
                         child: Text('48'),
-                        value: 17,
+                        value: 48,
                       ),
                       DropdownMenuItem(
                         child: Text('49'),
-                        value: 18,
+                        value: 49,
                       ),
                       DropdownMenuItem(
                         child: Text('50'),
-                        value: 19,
+                        value: 50,
                       ),
                     ],
                     onChanged: (value) {
@@ -641,47 +685,47 @@ class _ZapatoSeleccionable extends StatelessWidget {
                     items: [
                       DropdownMenuItem(
                         child: Text('35'),
-                        value: 1,
+                        value: 35,
                       ),
                       DropdownMenuItem(
                         child: Text('36'),
-                        value: 2,
+                        value: 36,
                       ),
                       DropdownMenuItem(
                         child: Text('37'),
-                        value: 3,
+                        value: 37,
                       ),
                       DropdownMenuItem(
                         child: Text('38'),
-                        value: 4,
+                        value: 38,
                       ),
                       DropdownMenuItem(
                         child: Text('39'),
-                        value: 5,
+                        value: 39,
                       ),
                       DropdownMenuItem(
                         child: Text('40'),
-                        value: 6,
+                        value: 40,
                       ),
                       DropdownMenuItem(
                         child: Text('41'),
-                        value: 7,
+                        value: 41,
                       ),
                       DropdownMenuItem(
                         child: Text('42'),
-                        value: 8,
+                        value: 42,
                       ),
                       DropdownMenuItem(
                         child: Text('43'),
-                        value: 9,
+                        value: 43,
                       ),
                       DropdownMenuItem(
                         child: Text('44'),
-                        value: 10,
+                        value: 44,
                       ),
                       DropdownMenuItem(
                         child: Text('45'),
-                        value: 11,
+                        value: 45,
                       ),
                     ],
                     onChanged: (value) {

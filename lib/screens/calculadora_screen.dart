@@ -1,6 +1,7 @@
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CalculadoraScreen extends StatefulWidget {
   @override
@@ -23,6 +24,8 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
   double saldoIVA = 0;
   double impAPagar = 0;
   double montoFacturas = 0;
+
+  final colores = ColoresApp();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,13 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                           Container(
                             width: 100,
                             child: TextField(
-                              keyboardType: TextInputType.phone,
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r"[0-9.]"))
+                                // RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+                              ],
                               decoration: estilos.inputDecoration(
                                   hintText: '0', circular: false),
                               onChanged: (value) {
@@ -94,6 +103,13 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                           Container(
                             width: 100,
                             child: TextField(
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r"[0-9.]"))
+                                // RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+                              ],
                               decoration: estilos.inputDecoration(
                                   hintText: '0', circular: false),
                               onChanged: (value) {
@@ -130,6 +146,13 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                           Container(
                             width: 100,
                             child: TextField(
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r"[0-9.]"))
+                                // RegExInputFormatter.withRegex('^\$|^(0|([1-9][0-9]{0,}))(\\.[0-9]{0,})?\$');
+                              ],
                               decoration: estilos.inputDecoration(
                                   hintText: '0', circular: false),
                               onChanged: (value) {
@@ -169,6 +192,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                           )
                         ],
                       ),
+                      Divider(),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -201,7 +225,8 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                             montoFacturas = (impAPagar * 100) / 13;
                           });
                         },
-                        child: Text('Calcular'),
+                        child: estilos.buttonChild(texto: 'CALCULAR'),
+                        style: estilos.buttonStyle(),
                       )
                     ],
                   ),

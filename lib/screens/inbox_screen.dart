@@ -8,6 +8,8 @@ class InboxScreen extends StatelessWidget {
   final constantes = DatosConstantes();
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -36,11 +38,14 @@ class InboxScreen extends StatelessWidget {
                                 leading: Image(
                                   image: NetworkImage(
                                       '${constantes.dominio}/uploads/inboxIcons/${snapshot.data[index]["logo"]}'),
+                                  width: size.width * 0.11,
                                 ),
                                 title: Text(
                                   snapshot.data[index]["categoria"],
                                 ),
-                                onTap: () {
+                                onTap: () async {
+                                  //final resp = await inboxservice.crearSala(snapshot.data[index]["id"]);
+                                  print('s');
                                   Navigator.pushNamed(context, 'chat',
                                       arguments: snapshot.data[index]);
                                 },

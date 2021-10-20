@@ -1,5 +1,4 @@
 import 'package:cbn/providers/providers.dart';
-import 'package:cbn/search/glosario_search.dart';
 import 'package:cbn/services/infoService.dart';
 import 'package:cbn/utils/constantes.dart';
 import 'package:cbn/widgets/fondo_pantalla.dart';
@@ -27,8 +26,9 @@ class GlosarioScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     child: TextFormField(
-                      decoration:
-                          InputDecoration(suffixIcon: Icon(Icons.search)),
+                      decoration: InputDecoration(
+                          suffixIcon: Icon(Icons.search),
+                          hintText: 'Busca por el acrónimo'),
                       onChanged: (value) {
                         if (value.isEmpty) {
                           provider.busqueda = false;
@@ -36,7 +36,10 @@ class GlosarioScreen extends StatelessWidget {
                         } else {
                           provider.busqueda = true;
                           var nuevaLista = snapshot.data!.where((item) {
-                            return item["acronimo"].toString().contains(value);
+                            return item["acronimo"]
+                                .toString()
+                                .toUpperCase()
+                                .contains(value.toUpperCase());
                           }).toList();
                           provider.glosarios = nuevaLista;
                         }
