@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DatosConstantes {
-  String dominio = 'https://interna-cbn.herokuapp.com';
+  // String dominio = 'https://interna-cbn.herokuapp.com';
   // String dominio = 'http://10.0.2.2:8080';
   // String dominio = 'http://192.168.0.26:8080';
-  // String dominio = 'http://192.168.0.12:8080';
+  String dominio = 'http://192.168.0.12:8080';
 }
 
 class ColoresApp {

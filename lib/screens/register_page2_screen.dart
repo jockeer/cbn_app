@@ -165,7 +165,7 @@ class _Regiones extends StatelessWidget {
                 }).toList(),
                 onChanged: (opt) {
                   provider.region = opt;
-                  this.customer.idRegion = opt.toString();
+                  this.customer.idRegion = int.parse(opt.toString());
                 },
               ),
             ),
@@ -258,7 +258,7 @@ class _BotonRegistro extends StatelessWidget {
           return mostrarSnackBar(
               context: context,
               mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
-
+        this.customer.idRegion = provider.region;
         loading(titulo: 'Registrando...', context: context);
         final registro =
             await usuarioService.registrarUsuario(this.customer, provider.foto);

@@ -95,7 +95,7 @@ class PerfilModel {
       numberSons: json["number_sons"],
       maritalStatus: json["marital_status"],
       height: json["height"],
-      idPolera: json["id_polera"],
+      idPolera: json["id_polera"].toString(),
       pantalon: json["pantalon"],
       zapato: json["zapato"],
       afp: json["afp"],
@@ -115,7 +115,7 @@ class PerfilModel {
       idRegion: json["id_region"],
       region: json["Region"]["name"],
       email: json["User"]["user_email"],
-      polera: json["Polera"]["talla"]);
+      polera: (json["Polera"] == null) ? "" : json["Polera"]["talla"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

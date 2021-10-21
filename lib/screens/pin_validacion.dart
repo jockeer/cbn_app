@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PinValidationScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final usuario = ModalRoute.of(context)?.settings.arguments;
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         final FocusScopeNode focus = FocusScope.of(context);
-        if (!focus.hasPrimaryFocus && focus.hasFocus) return FocusManager.instance.primaryFocus!.unfocus();
+        if (!focus.hasPrimaryFocus && focus.hasFocus)
+          return FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(),
@@ -31,12 +31,13 @@ class PinValidationScreen extends StatelessWidget {
                 children: [
                   TopLogoWidget(),
                   _PinCard(usuario: usuario),
-                  SizedBox(height: 30,),
+                  SizedBox(
+                    height: 30,
+                  ),
                   _PinValidacion(usuario: usuario)
                 ],
               ),
             )
-    
           ],
         ),
       ),
@@ -48,16 +49,16 @@ class _PinValidacion extends StatelessWidget {
   final estilos = EstilosApp();
   final usuario;
   final usuarioService = UsuarioService();
-  _PinValidacion({ required this.usuario });
+  _PinValidacion({required this.usuario});
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: estilos.buttonStyle(),
       child: estilos.buttonChild(texto: 'Enviar pin nuevamente'),
-      onPressed: ()async{
+      onPressed: () async {
         print(this.usuario);
         await usuarioService.reenviarPIN(this.usuario);
-      }, 
+      },
     );
   }
 }
@@ -67,46 +68,70 @@ class _PinCard extends StatelessWidget {
   final validator = FormValidator();
   final usuarioService = UsuarioService();
   final usuario;
-  _PinCard({ required this.usuario });
+  _PinCard({required this.usuario});
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<RegistroProvider>(context);
     final size = MediaQuery.of(context).size;
     return Card(
       child: Container(
-        width: size.width*0.85,
+        width: size.width * 0.85,
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Text('Revisa tu correo o espera un mensaje con tu PIN de validacion y luego dale al boton Validar PIN', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12),),
-              SizedBox(height: 20,),
+              Text(
+                'Revisa tu correo o espera un mensaje SMS con tu PIN de validación y luego selecciona el botón Validar PIN',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 keyboardType: TextInputType.phone,
                 textAlign: TextAlign.center,
-                decoration: estilos.inputDecoration(hintText: 'ingrese su pin de validacion'),
-                onChanged: (value){
+                decoration: estilos.inputDecoration(
+                    hintText: 'Ingrese su pin de validación'),
+                onChanged: (value) {
                   provider.pin = value;
                 },
               ),
-              SizedBox(height: 20,),
-
+              SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 style: estilos.buttonStyle(),
                 child: estilos.buttonChild(texto: 'Validar PIN'),
                 onPressed: (provider.pin.isEmpty || provider.pin.length < 4)
-                  ? null
-                  : () async {
-                    if (!validator.isNumeric(provider.pin)) return mostrarSnackBar(context: context, mensaje: 'el pin no es valido');
-                    final internet = await comprobarInternet();
-                    if (!internet) return mostrarSnackBar(context: context, mensaje: 'Compruebe su conexion a internet e intentelo de nuevo');
-                    loading(titulo: 'Validando pin...', context: context);
-                    final validarPin = await usuarioService.validarPin( int.parse(provider.pin), this.usuario["id"] );
-                    Navigator.pop(context);
-                    if (!validarPin["ok"]) return mostrarSnackBar(context: context, mensaje: 'pin no valido');
-                    
-                    showDialog(context: context, builder: (context){ return SuccessAlert(titulo: 'Cuenta creada',);});
-                  },
+                    ? null
+                    : () async {
+                        if (!validator.isNumeric(provider.pin))
+                          return mostrarSnackBar(
+                              context: context, mensaje: 'el pin no es valido');
+                        final internet = await comprobarInternet();
+                        if (!internet)
+                          return mostrarSnackBar(
+                              context: context,
+                              mensaje:
+                                  'Compruebe su conexion a internet e intentelo de nuevo');
+                        loading(titulo: 'Validando pin...', context: context);
+                        final validarPin = await usuarioService.validarPin(
+                            int.parse(provider.pin), this.usuario["id"]);
+                        Navigator.pop(context);
+                        if (!validarPin["ok"])
+                          return mostrarSnackBar(
+                              context: context, mensaje: 'pin no valido');
+
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SuccessAlert(
+                                titulo:
+                                    'Tu cuenta ha sido creada correctamente',
+                              );
+                            });
+                      },
               )
             ],
           ),

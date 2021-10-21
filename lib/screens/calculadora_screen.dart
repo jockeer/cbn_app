@@ -39,7 +39,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
         body: SafeArea(
           child: Stack(
             children: [
-              // FondoPantalla(img: 'fondoblanco.png'),
+              FondoPantalla(img: 'fondoWhite.png'),
               SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30),
@@ -129,7 +129,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(child: Text('Impuestos a Pagar (D - E)')),
+                          Expanded(child: Text('Impuestos a Pagar')),
                           Container(
                             width: 100,
                             child: Text(impPagar.toStringAsFixed(2)),
@@ -172,7 +172,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(child: Text('Impuesto a pagar (F - G)')),
+                          Expanded(child: Text('Impuesto a pagar')),
                           Container(
                             width: 100,
                             child: Text(impAPagar.toStringAsFixed(2)),
@@ -193,6 +193,10 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                         ],
                       ),
                       Divider(),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      // Expanded(child: Container()),
                       ElevatedButton(
                         onPressed: () {
                           setState(() {

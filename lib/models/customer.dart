@@ -30,7 +30,7 @@ class CustomerModel {
   String? address;
 
   String? email;
-  String? idRegion;
+  int? idRegion;
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) => CustomerModel(
         id: json["id"],

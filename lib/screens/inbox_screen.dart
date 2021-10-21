@@ -45,7 +45,7 @@ class InboxScreen extends StatelessWidget {
                                 ),
                                 onTap: () async {
                                   //final resp = await inboxservice.crearSala(snapshot.data[index]["id"]);
-                                  print('s');
+                                  // print('s');
                                   Navigator.pushNamed(context, 'chat',
                                       arguments: snapshot.data[index]);
                                 },

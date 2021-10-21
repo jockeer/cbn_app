@@ -3,6 +3,7 @@ import 'package:cbn/providers/perfil_provider.dart';
 import 'package:cbn/services/usuarioService.dart';
 import 'package:cbn/utils/carga.dart';
 import 'package:cbn/utils/constantes.dart';
+import 'package:cbn/utils/preferencias_usuario.dart';
 import 'package:cbn/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -298,10 +299,10 @@ class _Datos extends StatelessWidget {
   final estilos = EstilosApp();
   final GlobalKey<FormState> miformState;
   _Datos({required this.perfil, required this.miformState});
+  final prefs = PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final provider = Provider.of<PerfilProvider>(context);
     return Form(
       key: this.miformState,
@@ -401,6 +402,7 @@ class _Datos extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
+                prefs.token = '';
                 Navigator.pushReplacementNamed(context, 'welcome');
               },
               child: estilos.buttonChild(texto: 'Cerrar sesión'),

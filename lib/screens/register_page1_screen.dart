@@ -59,6 +59,7 @@ class _Formulario extends StatelessWidget {
       child: Form(
         key: formState,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             estilos.inputLabel(
               label: 'Nombre(s)',
@@ -92,15 +93,24 @@ class _Formulario extends StatelessWidget {
               label: 'Carnet de Identidad',
               obligatorio: true,
             ),
+            Padding(
+              padding: EdgeInsets.only(left: 15, bottom: 0),
+              child: Text('(Su carnet de identidad sera su contraseña)'),
+            ),
+            SizedBox(
+              height: 10,
+            ),
             _Carnet(
               customer: this.customer,
             ),
             SizedBox(
               height: 50,
             ),
-            _NextButton(
-              formState: this.formState,
-              customer: this.customer,
+            Center(
+              child: _NextButton(
+                formState: this.formState,
+                customer: this.customer,
+              ),
             ),
             SizedBox(
               height: 50,
