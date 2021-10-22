@@ -157,7 +157,8 @@ class _FotoPerfil extends StatelessWidget {
                             "id_polera": provider.idpolera,
                             "pantalon": provider.idpantalon,
                             "zapato": provider.idzapato,
-                            "address": provider.direccion
+                            "address": provider.direccion,
+                            "id_escolaridad": provider.idEscolaridad
                           };
                           loading(
                               titulo: 'actualizando Perfil', context: context);
@@ -369,6 +370,12 @@ class _Datos extends StatelessWidget {
           // ),
           (!provider.editPerfil)
               ? _Dato(
+                  titulo: 'Escolaridad',
+                  texto: this.perfil.idEscolaridad ?? "",
+                )
+              : _GradoEscolaridadSeleccionable(),
+          (!provider.editPerfil)
+              ? _Dato(
                   titulo: 'Estatura',
                   texto: this.perfil.height!,
                 )
@@ -461,6 +468,75 @@ class _EstadoCivil extends StatelessWidget {
                     ],
                     onChanged: (value) {
                       provider.estadoCivil = value.toString();
+                    },
+                  ),
+                ),
+              )),
+          Divider(
+            thickness: 2,
+            height: 0,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _GradoEscolaridadSeleccionable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final provider = Provider.of<PerfilProvider>(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        children: [
+          ListTileTheme(
+              dense: true,
+              child: ListTile(
+                title: Text(
+                  'Escolaridad',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                trailing: Container(
+                  width: size.width * 0.4,
+                  child: DropdownButton(
+                    dropdownColor: Colors.white,
+                    icon: Icon(Icons.arrow_circle_down_outlined),
+                    isExpanded: true,
+                    value: provider.idEscolaridad,
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('Primario'),
+                        value: 1,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Secundario'),
+                        value: 2,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Licenciatura'),
+                        value: 4,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Maestria'),
+                        value: 5,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Tecnico medio'),
+                        value: 6,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Tecnico superior'),
+                        value: 7,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Doctorado'),
+                        value: 8,
+                      ),
+                    ],
+                    onChanged: (value) {
+                      provider.idEscolaridad = int.parse(value.toString());
                     },
                   ),
                 ),

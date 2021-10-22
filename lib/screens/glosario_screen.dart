@@ -36,10 +36,14 @@ class GlosarioScreen extends StatelessWidget {
                         } else {
                           provider.busqueda = true;
                           var nuevaLista = snapshot.data!.where((item) {
-                            return item["acronimo"]
-                                .toString()
-                                .toUpperCase()
-                                .contains(value.toUpperCase());
+                            return (item["acronimo"]
+                                    .toString()
+                                    .toUpperCase()
+                                    .contains(value.toUpperCase()) ||
+                                item["definicion"]
+                                    .toString()
+                                    .toUpperCase()
+                                    .contains(value.toUpperCase()));
                           }).toList();
                           provider.glosarios = nuevaLista;
                         }
