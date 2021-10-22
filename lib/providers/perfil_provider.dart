@@ -5,6 +5,7 @@ class PerfilProvider extends ChangeNotifier {
   int _idpolera = 1;
   int _idpantalon = 32;
   int _idzapato = 35;
+  int _idEscolaridad = 1;
   String _estadoCivil = 'S';
   late String _telefono;
   late String _interno;
@@ -99,6 +100,15 @@ class PerfilProvider extends ChangeNotifier {
 
   set idpolera(int idpolera) {
     this._idpolera = idpolera;
+    notifyListeners();
+  }
+
+  int get idEscolaridad {
+    return this._idEscolaridad;
+  }
+
+  set idEscolaridad(int idEscolaridad) {
+    this._idEscolaridad = idEscolaridad;
     notifyListeners();
   }
 }

@@ -45,11 +45,12 @@ class MenuInferior extends StatelessWidget {
               SizedBox(
                 width: 40,
               ),
-              _MenuItem(img: 'glosario.png', texto: 'Glosario', index: 1),
+              _MenuItem(img: 'beneficios.png', texto: 'Beneficios', index: 2),
               SizedBox(
                 width: 40,
               ),
-              _MenuItem(img: 'beneficios.png', texto: 'Beneficios', index: 2),
+              _MenuItem(
+                  img: 'calculadora.png', texto: 'Calculadora IVA', index: 6),
               SizedBox(
                 width: 40,
               ),
@@ -57,17 +58,17 @@ class MenuInferior extends StatelessWidget {
               SizedBox(
                 width: 40,
               ),
-              _MenuItem(img: 'gestion.png', texto: 'Gestión I.', index: 4),
-              SizedBox(
-                width: 40,
-              ),
               _MenuItem(img: 'inbo.png', texto: 'Inbox', index: 5),
               SizedBox(
                 width: 40,
               ),
-              _MenuItem(img: 'calculadora.png', texto: 'IVA', index: 6),
+              _MenuItem(img: 'gestion.png', texto: 'Gestión I.', index: 4),
               SizedBox(
                 width: 20,
+              ),
+              _MenuItem(img: 'glosario.png', texto: 'Glosario', index: 1),
+              SizedBox(
+                width: 40,
               ),
             ],
           ),

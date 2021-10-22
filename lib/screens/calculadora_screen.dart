@@ -185,7 +185,7 @@ class _CalculadoraScreenState extends State<CalculadoraScreen> {
                         children: [
                           Expanded(
                               child: Text(
-                                  'Monto en facturas que puede presentar como pago a cuenta para cubrir el impuesto a pagar (Hx100/13)')),
+                                  'Monto en facturas que puede presentar como pago a cuenta para cubrir el impuesto a pagar')),
                           Container(
                             width: 100,
                             child: Text(montoFacturas.toStringAsFixed(2)),

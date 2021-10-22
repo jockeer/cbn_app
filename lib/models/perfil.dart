@@ -105,7 +105,7 @@ class PerfilModel {
       balanceIva: json["balance_iva"],
       gender: json["gender"],
       sindicalizado: json["sindicalizado"],
-      idEscolaridad: json["id_escolaridad"],
+      idEscolaridad: json["id_escolaridad"]?.toString() ?? "Por definir",
       codCajaSalud: json["cod_caja_salud"],
       convenio: json["convenio"],
       centroCosto: json["centro_costo"],

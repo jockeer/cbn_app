@@ -143,7 +143,7 @@ class _Mensajeria extends StatelessWidget {
                       height: 5,
                     ),
                     Text(
-                      milista[index]["mensaje"],
+                      milista[index]["mensaje"] ?? "",
                       style: TextStyle(
                           color: (uid == milista[index]["id_user"])
                               ? Colors.black

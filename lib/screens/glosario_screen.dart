@@ -28,7 +28,7 @@ class GlosarioScreen extends StatelessWidget {
                     child: TextFormField(
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.search),
-                          hintText: 'Busca por el acrónimo'),
+                          hintText: 'Buscar...'),
                       onChanged: (value) {
                         if (value.isEmpty) {
                           provider.busqueda = false;
@@ -36,10 +36,14 @@ class GlosarioScreen extends StatelessWidget {
                         } else {
                           provider.busqueda = true;
                           var nuevaLista = snapshot.data!.where((item) {
-                            return item["acronimo"]
-                                .toString()
-                                .toUpperCase()
-                                .contains(value.toUpperCase());
+                            return (item["acronimo"]
+                                    .toString()
+                                    .toUpperCase()
+                                    .contains(value.toUpperCase()) ||
+                                item["definicion"]
+                                    .toString()
+                                    .toUpperCase()
+                                    .contains(value.toUpperCase()));
                           }).toList();
                           provider.glosarios = nuevaLista;
                         }
