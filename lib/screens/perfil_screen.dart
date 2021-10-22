@@ -410,7 +410,9 @@ class _Datos extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 prefs.token = '';
-                Navigator.pushReplacementNamed(context, 'welcome');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'welcome', (route) => false);
+                // Navigator.pushReplacementNamed(context, 'welcome');kck
               },
               child: estilos.buttonChild(texto: 'Cerrar sesión'),
               style: estilos.buttonStyle(),

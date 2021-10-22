@@ -28,7 +28,7 @@ class GlosarioScreen extends StatelessWidget {
                     child: TextFormField(
                       decoration: InputDecoration(
                           suffixIcon: Icon(Icons.search),
-                          hintText: 'Busca por el acrónimo'),
+                          hintText: 'Buscar...'),
                       onChanged: (value) {
                         if (value.isEmpty) {
                           provider.busqueda = false;
